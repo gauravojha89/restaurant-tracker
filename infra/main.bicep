@@ -17,7 +17,8 @@ var cosmosAccountName = '${resourcePrefix}-cosmos-${uniqueSuffix}'
 var staticWebAppName = '${resourcePrefix}-swa-${uniqueSuffix}'
 
 // =====================================================
-// Cosmos DB Account - Free Tier
+// Cosmos DB Account - Serverless (pay-per-use, minimal cost)
+// Note: Free tier limited to 1 per subscription; using serverless for low cost
 // =====================================================
 resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
   name: cosmosAccountName
@@ -25,7 +26,6 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
   kind: 'GlobalDocumentDB'
   properties: {
     databaseAccountOfferType: 'Standard'
-    enableFreeTier: true // Uses free tier (1000 RU/s, 25GB)
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
     }
@@ -38,7 +38,7 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
     ]
     capabilities: [
       {
-        name: 'EnableServerless' // Alternative: use serverless for pay-per-use
+        name: 'EnableServerless'
       }
     ]
     // Security: Disable key-based auth, use RBAC only
@@ -94,8 +94,8 @@ resource staticWebApp 'Microsoft.Web/staticSites@2023-01-01' = {
   name: staticWebAppName
   location: location
   sku: {
-    name: 'Free'
-    tier: 'Free'
+    name: 'free'
+    size: 'free'
   }
   properties: {
     stagingEnvironmentPolicy: 'Enabled'
