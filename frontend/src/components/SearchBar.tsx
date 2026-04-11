@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, X, Loader2 } from 'lucide-react';
-import { useMapboxSearch } from '../hooks/useMapboxSearch';
+import { useAzureMapsSearch } from '../hooks/useAzureMapsSearch';
 import { useStore } from '../store';
 import type { Category } from '../types';
 
@@ -11,7 +11,7 @@ interface SearchResult {
   city: string;
   latitude: number;
   longitude: number;
-  categories: string[];
+  categories: Category[];
 }
 
 interface SearchBarProps {
@@ -26,8 +26,8 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  const { search, isLoading } = useMapboxSearch();
-  const { mapView, setMapView } = useStore();
+  const { search, isLoading } = useAzureMapsSearch();
+  const { mapView } = useStore();
 
   // Debounced search
   useEffect(() => {
@@ -89,52 +89,12 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
   };
 
   const handleSelectResult = (result: SearchResult) => {
-    // Map Mapbox categories to our categories
-    const mappedCategories = mapMapboxCategories(result.categories);
-
-    setMapView({
-      longitude: result.longitude,
-      latitude: result.latitude,
-      zoom: 16,
-    });
-
     if (onSelectResult) {
-      onSelectResult({ ...result, categories: mappedCategories as any });
+      onSelectResult(result);
     }
-
     setQuery('');
     setResults([]);
     setIsOpen(false);
-  };
-
-  const mapMapboxCategories = (mapboxCategories: string[]): Category[] => {
-    const categoryMap: Record<string, Category> = {
-      cafe: 'coffee',
-      coffee: 'coffee',
-      'coffee shop': 'coffee',
-      bakery: 'desserts',
-      dessert: 'desserts',
-      'ice cream': 'desserts',
-      breakfast: 'breakfast',
-      brunch: 'brunch',
-      restaurant: 'dinner',
-      food: 'lunch',
-      bar: 'dinner',
-      pizza: 'dinner',
-      sushi: 'dinner',
-      'fast food': 'lunch',
-      diner: 'lunch',
-    };
-
-    const matched = new Set<Category>();
-    mapboxCategories.forEach((cat) => {
-      const lower = cat.toLowerCase().trim();
-      if (categoryMap[lower]) {
-        matched.add(categoryMap[lower]);
-      }
-    });
-
-    return matched.size > 0 ? Array.from(matched) : ['lunch'];
   };
 
   return (

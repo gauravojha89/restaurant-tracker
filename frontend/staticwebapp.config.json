@@ -12,7 +12,7 @@
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.mapbox.com; style-src 'self' 'unsafe-inline' https://api.mapbox.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.mapbox.com https://*.mapbox.com; worker-src blob:; font-src 'self' data:;",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.azuremaps.com; style-src 'self' 'unsafe-inline' https://*.azuremaps.com; img-src 'self' data: https: blob:; connect-src 'self' https://atlas.microsoft.com https://*.azuremaps.com https://*.virtualearth.net; worker-src blob:; font-src 'self' data:;",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "geolocation=(self)"
   },

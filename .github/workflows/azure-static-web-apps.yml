@@ -26,8 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,15 +42,7 @@ jobs:
         run: npm run build
         working-directory: frontend
         env:
-          VITE_MAPBOX_TOKEN: ${{ secrets.VITE_MAPBOX_TOKEN }}
-
-      - name: Install API dependencies
-        run: npm ci
-        working-directory: api
-
-      - name: Build API
-        run: npm run build
-        working-directory: api
+          VITE_AZURE_MAPS_KEY: ${{ secrets.VITE_AZURE_MAPS_KEY }}
 
       - name: Deploy to Azure Static Web Apps
         id: deploy
@@ -61,11 +51,10 @@ jobs:
           azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/frontend"
-          api_location: "/api"
-          output_location: "dist"
+          app_location: "/frontend/dist"
+          api_location: ""
+          output_location: ""
           skip_app_build: true
-          skip_api_build: true
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

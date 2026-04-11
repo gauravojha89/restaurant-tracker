@@ -1,5 +1,4 @@
-// Restaurant Tracker - Azure Infrastructure
-// Uses free/low-cost tiers suitable for Azure free credits
+// Restaurant Tracker - Azure Infrastructure (Azure-only, no third-party services)
 
 @description('The location for all resources')
 param location string = resourceGroup().location
@@ -15,10 +14,10 @@ var appName = 'foodiemap'
 var resourcePrefix = '${appName}-${environmentName}'
 var cosmosAccountName = '${resourcePrefix}-cosmos-${uniqueSuffix}'
 var staticWebAppName = '${resourcePrefix}-swa-${uniqueSuffix}'
+var mapsAccountName = '${resourcePrefix}-maps-${uniqueSuffix}'
 
 // =====================================================
-// Cosmos DB Account - Serverless (pay-per-use, minimal cost)
-// Note: Free tier limited to 1 per subscription; using serverless for low cost
+// Cosmos DB Account - Serverless (minimal cost, pay per use)
 // =====================================================
 resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
   name: cosmosAccountName
@@ -41,8 +40,7 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
         name: 'EnableServerless'
       }
     ]
-    // Security: Disable key-based auth, use RBAC only
-    disableLocalAuth: false // Set to true once RBAC is configured
+    disableLocalAuth: false
   }
 }
 
@@ -72,60 +70,42 @@ resource cosmosContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/con
       indexingPolicy: {
         indexingMode: 'consistent'
         automatic: true
-        includedPaths: [
-          {
-            path: '/*'
-          }
-        ]
-        excludedPaths: [
-          {
-            path: '/"_etag"/?'
-          }
-        ]
+        includedPaths: [{ path: '/*' }]
+        excludedPaths: [{ path: '/"_etag"/?' }]
       }
     }
   }
 }
 
 // =====================================================
-// Azure Static Web App - Free Tier
+// Azure Maps - Gen2 (replaces all third-party map services)
+// ~500 QPS free, then $0.42/1000 transactions - very cheap for personal use
+// =====================================================
+resource mapsAccount 'Microsoft.Maps/accounts@2023-06-01' = {
+  name: mapsAccountName
+  location: 'global'
+  sku: {
+    name: 'G2'
+  }
+  kind: 'Gen2'
+  properties: {
+    disableLocalAuth: false
+  }
+}
+
+// =====================================================
+// Azure Static Web App - Free Tier (frontend + CI/CD)
 // =====================================================
 resource staticWebApp 'Microsoft.Web/staticSites@2023-01-01' = {
   name: staticWebAppName
   location: location
   sku: {
-    name: 'free'
-    size: 'free'
+    name: 'Free'
+    tier: 'Free'
   }
   properties: {
     stagingEnvironmentPolicy: 'Enabled'
     allowConfigFileUpdates: true
-    buildProperties: {
-      appLocation: '/frontend'
-      apiLocation: '/api'
-      outputLocation: 'dist'
-    }
-  }
-  identity: {
-    type: 'SystemAssigned'
-  }
-}
-
-// =====================================================
-// RBAC: Grant Static Web App access to Cosmos DB
-// =====================================================
-
-// Built-in role: Cosmos DB Built-in Data Contributor
-// This allows read/write access to Cosmos DB data using Managed Identity
-var cosmosDataContributorRoleId = '00000000-0000-0000-0000-000000000002'
-
-resource cosmosRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2023-11-15' = {
-  parent: cosmosAccount
-  name: guid(cosmosAccount.id, staticWebApp.id, cosmosDataContributorRoleId)
-  properties: {
-    roleDefinitionId: '${cosmosAccount.id}/sqlRoleDefinitions/${cosmosDataContributorRoleId}'
-    principalId: staticWebApp.identity.principalId
-    scope: cosmosAccount.id
   }
 }
 
@@ -140,3 +120,7 @@ output cosmosAccountName string = cosmosAccount.name
 output cosmosEndpoint string = cosmosAccount.properties.documentEndpoint
 output cosmosDatabaseName string = cosmosDatabase.name
 output cosmosContainerName string = cosmosContainer.name
+
+output mapsAccountName string = mapsAccount.name
+// Note: retrieve the subscription key after deployment with:
+// az maps account keys list --name <name> --resource-group <rg> --query primaryKey -o tsv
