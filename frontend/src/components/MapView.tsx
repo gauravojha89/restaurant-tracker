@@ -164,12 +164,14 @@ export function MapView() {
 
     mapRef.current = map;
 
+    const markersMap = savedMarkersRef.current;
     return () => {
       map.dispose();
       mapRef.current = null;
       popupRef.current = null;
-      savedMarkersRef.current.clear();
+      markersMap.clear();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // intentionally empty — init once
 
   // ── 2. Fly to location when store view changes externally ──
