@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useShallow } from 'zustand/react/shallow';
 import type { SavedRestaurant, SearchFilters, MapViewState } from './types';
 
 interface AppState {
@@ -134,48 +135,50 @@ export const useStore = create<AppState>()(
   )
 );
 
-// Selectors
+// Selectors — useShallow prevents "getSnapshot not cached" infinite loop in React 19
 export const useToVisitList = () =>
-  useStore((state) =>
-    state.savedRestaurants.filter((r) => r.listType === 'toVisit')
+  useStore(
+    useShallow((state) => state.savedRestaurants.filter((r) => r.listType === 'toVisit'))
   );
 
 export const useFavoritesList = () =>
-  useStore((state) =>
-    state.savedRestaurants.filter((r) => r.listType === 'favorite')
+  useStore(
+    useShallow((state) => state.savedRestaurants.filter((r) => r.listType === 'favorite'))
   );
 
 export const useFilteredRestaurants = (listType?: 'toVisit' | 'favorite') => {
-  return useStore((state) => {
-    let restaurants = state.savedRestaurants;
+  return useStore(
+    useShallow((state) => {
+      let restaurants = state.savedRestaurants;
 
-    if (listType) {
-      restaurants = restaurants.filter((r) => r.listType === listType);
-    }
+      if (listType) {
+        restaurants = restaurants.filter((r) => r.listType === listType);
+      }
 
-    const { query, categories, city } = state.filters;
+      const { query, categories, city } = state.filters;
 
-    if (query) {
-      const lowerQuery = query.toLowerCase();
-      restaurants = restaurants.filter(
-        (r) =>
-          r.name.toLowerCase().includes(lowerQuery) ||
-          r.address.toLowerCase().includes(lowerQuery)
-      );
-    }
+      if (query) {
+        const lowerQuery = query.toLowerCase();
+        restaurants = restaurants.filter(
+          (r) =>
+            r.name.toLowerCase().includes(lowerQuery) ||
+            r.address.toLowerCase().includes(lowerQuery)
+        );
+      }
 
-    if (categories.length > 0) {
-      restaurants = restaurants.filter((r) =>
-        r.categories.some((c) => categories.includes(c))
-      );
-    }
+      if (categories.length > 0) {
+        restaurants = restaurants.filter((r) =>
+          r.categories.some((c) => categories.includes(c))
+        );
+      }
 
-    if (city) {
-      restaurants = restaurants.filter(
-        (r) => r.city.toLowerCase() === city.toLowerCase()
-      );
-    }
+      if (city) {
+        restaurants = restaurants.filter(
+          (r) => r.city.toLowerCase() === city.toLowerCase()
+        );
+      }
 
-    return restaurants;
-  });
+      return restaurants;
+    })
+  );
 };
