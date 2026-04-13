@@ -3,8 +3,9 @@ import { getRestaurantsByUser, upsertRestaurant, deleteRestaurant, RestaurantDoc
 
 // Users in the same household share one list. Everyone else gets their own.
 const HOUSEHOLDS: Record<string, string> = {
-  'gauravojha89':  'household-gaurav',
-  'poojapandey90': 'household-gaurav',
+  'gauravojha89':           'household-gaurav',
+  'poojapandey90':          'household-gaurav',
+  'gauravojha@hotmail.com': 'household-gaurav',
 };
 
 function getUserId(req: HttpRequest): string {
