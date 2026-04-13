@@ -124,7 +124,7 @@ export const useStore = create<AppState>()(
       setSelectedRestaurantId: (id) => set({ selectedRestaurantId: id }),
 
       // Cities
-      cities: ['Atlanta, GA'],
+      cities: [],
       addCity: (city) =>
         set((state) => ({
           cities: state.cities.includes(city)
@@ -134,10 +134,10 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'restaurant-tracker-storage',
-      version: 2,
+      version: 3,
       migrate: () => ({
         savedRestaurants: [] as SavedRestaurant[],
-        cities: ['Atlanta, GA'],
+        cities: [],
         mapView: DEFAULT_MAP_VIEW,
         activeTab: 'map' as const,
       }),
