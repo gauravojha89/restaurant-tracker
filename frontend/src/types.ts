@@ -38,12 +38,12 @@ export interface SearchFilters {
 
 export const CATEGORIES: { value: Category; label: string; emoji: string; color: string }[] = [
   // — Meal types —
-  { value: 'breakfast', label: 'Morning Table', emoji: '🌅', color: '#f59e0b' },
+  { value: 'breakfast', label: 'Breakfast', emoji: '🍳', color: '#f59e0b' },
   { value: 'brunch', label: 'Brunch', emoji: '🥂', color: '#ec4899' },
-  { value: 'lunch', label: 'Déjeuner', emoji: '🥗', color: '#22c55e' },
-  { value: 'dinner', label: 'Dîner', emoji: '🍽️', color: '#8b5cf6' },
-  { value: 'coffee', label: 'Café', emoji: '☕', color: '#78716c' },
-  { value: 'desserts', label: 'Pâtisserie', emoji: '🍰', color: '#f472b6' },
+  { value: 'lunch', label: 'Lunch', emoji: '🥗', color: '#22c55e' },
+  { value: 'dinner', label: 'Dinner', emoji: '🍽️', color: '#8b5cf6' },
+  { value: 'coffee', label: 'Coffee', emoji: '☕', color: '#78716c' },
+  { value: 'desserts', label: 'Desserts', emoji: '🍰', color: '#f472b6' },
   // — Occasions —
   { value: 'everyday', label: 'Everyday Haunt', emoji: '🏡', color: '#0ea5e9' },
   { value: 'date-night', label: 'Rendez-vous', emoji: '🕯️', color: '#be185d' },
