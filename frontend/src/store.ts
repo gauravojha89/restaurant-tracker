@@ -136,9 +136,10 @@ export const useStore = create<AppState>()(
       name: 'restaurant-tracker-storage',
       version: 2,
       migrate: () => ({
-        savedRestaurants: [],
+        savedRestaurants: [] as SavedRestaurant[],
         cities: ['Atlanta, GA'],
         mapView: DEFAULT_MAP_VIEW,
+        activeTab: 'map' as const,
       }),
       partialize: (state) => ({
         savedRestaurants: state.savedRestaurants,
