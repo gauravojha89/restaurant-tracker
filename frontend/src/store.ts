@@ -135,12 +135,18 @@ export const useStore = create<AppState>()(
     {
       name: 'restaurant-tracker-storage',
       version: 3,
-      migrate: () => ({
-        savedRestaurants: [] as SavedRestaurant[],
-        cities: [],
-        mapView: DEFAULT_MAP_VIEW,
-        activeTab: 'map' as const,
-      }),
+      migrate: (persistedState) => {
+        // Preserve all existing data — only fix cities by deriving from saved restaurants
+        const s = persistedState as Partial<ReturnType<typeof useStore.getState>>;
+        const saved = (s.savedRestaurants ?? []) as SavedRestaurant[];
+        const derivedCities = [...new Set(saved.map((r) => r.city).filter(Boolean))];
+        return {
+          savedRestaurants: saved,
+          cities: derivedCities,
+          mapView: s.mapView ?? DEFAULT_MAP_VIEW,
+          activeTab: s.activeTab ?? 'map',
+        };
+      },
       partialize: (state) => ({
         savedRestaurants: state.savedRestaurants,
         cities: state.cities,
