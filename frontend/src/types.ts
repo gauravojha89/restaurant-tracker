@@ -45,8 +45,8 @@ export const CATEGORIES: { value: Category; label: string; emoji: string; color:
   { value: 'coffee', label: 'Coffee', emoji: '☕', color: '#78716c', group: 'meal' },
   { value: 'desserts', label: 'Desserts', emoji: '🍰', color: '#f472b6', group: 'meal' },
   // — Occasions —
-  { value: 'everyday', label: 'Everyday', emoji: '🏡', color: '#0ea5e9', group: 'occasion' },
-  { value: 'date-night', label: 'Date', emoji: '🕯️', color: '#be185d', group: 'occasion' },
+  { value: 'everyday', label: 'Everyday', emoji: '�', color: '#0ea5e9', group: 'occasion' },
+  { value: 'date-night', label: 'Date', emoji: '🌹', color: '#be185d', group: 'occasion' },
   { value: 'celebration', label: 'Célébration', emoji: '🎊', color: '#7c3aed', group: 'occasion' },
 ];
 
