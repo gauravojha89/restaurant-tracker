@@ -144,6 +144,7 @@ export const useStore = create<AppState>()(
         savedRestaurants: state.savedRestaurants,
         cities: state.cities,
         mapView: state.mapView,
+        activeTab: state.activeTab,
       }),
     }
   )
