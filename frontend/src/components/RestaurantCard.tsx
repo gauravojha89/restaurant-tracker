@@ -173,15 +173,14 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 </div>
               </div>
             ) : (
-              <div className="space-y-1.5 group">
-                {/* Meal type pills */}
+              <div className="space-y-2.5 group">
                 {(() => {
                   const mealCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'meal');
                   const occasionCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'occasion');
                   return (
                     <>
                       {mealCats.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 items-center">
+                        <div className="flex flex-wrap gap-1.5">
                           {mealCats.map((cat) => {
                             const info = getCategoryInfo(cat);
                             return info ? (
@@ -194,8 +193,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                         </div>
                       )}
                       {occasionCats.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 items-center">
-                          <span className="text-xs text-gray-300 font-medium">✦</span>
+                        <div className="flex flex-wrap gap-1.5 pt-1 border-t border-gray-100">
                           {occasionCats.map((cat) => {
                             const info = getCategoryInfo(cat);
                             return info ? (
