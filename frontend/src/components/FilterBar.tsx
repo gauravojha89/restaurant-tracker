@@ -53,7 +53,7 @@ export function FilterBar() {
   const Strip = ({
     group, label, labelColor, bgColor,
   }: {
-    group: 'meal' | 'occasion'; label: string; labelColor: string; bgColor: string;
+    group: 'meal' | 'occasion' | 'drinks'; label: string; labelColor: string; bgColor: string;
   }) => (
     <div className="flex items-center" style={{ backgroundColor: bgColor }}>
       {/* Pinned label */}
@@ -127,6 +127,7 @@ export function FilterBar() {
     <div className="bg-white border-b border-gray-100 divide-y divide-gray-100">
       <CityRow />
       <Strip group="meal"     label="Meal"     labelColor="#92694a" bgColor="#fdf8f3" />
+      <Strip group="drinks"   label="Drinks"   labelColor="#92400e" bgColor="#fffbeb" />
       <Strip group="occasion" label="Occasion" labelColor="#5b5b8a" bgColor="#f3f3fa" />
     </div>
   );
