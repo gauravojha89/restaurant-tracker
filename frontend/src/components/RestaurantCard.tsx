@@ -89,7 +89,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 mb-0.5">
-                <h3 className="text-sm font-semibold text-gray-900 truncate">
+                <h3 className="text-base font-semibold text-gray-900 truncate">
                   {restaurant.name}
                 </h3>
                 {restaurant.listType === 'favorite' && (
@@ -173,38 +173,33 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 </div>
               </div>
             ) : (
-              <div className="space-y-1.5 group">
+              <div className="flex flex-wrap items-center gap-1 group">
                 {(() => {
                   const mealCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'meal');
                   const occasionCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'occasion');
                   return (
                     <>
-                      {mealCats.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {mealCats.map((cat) => {
-                            const info = getCategoryInfo(cat);
-                            return info ? (
-                              <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full"
-                                style={{ backgroundColor: `${info.color}15`, color: info.color }}>
-                                {info.emoji} {info.label}
-                              </span>
-                            ) : null;
-                          })}
-                        </div>
+                      {mealCats.map((cat) => {
+                        const info = getCategoryInfo(cat);
+                        return info ? (
+                          <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: `${info.color}15`, color: info.color }}>
+                            {info.emoji} {info.label}
+                          </span>
+                        ) : null;
+                      })}
+                      {mealCats.length > 0 && occasionCats.length > 0 && (
+                        <span className="text-gray-200 text-xs select-none">&middot;</span>
                       )}
-                      {occasionCats.length > 0 && (
-                        <div className="flex flex-wrap gap-1 pt-1 border-t border-gray-100">
-                          {occasionCats.map((cat) => {
-                            const info = getCategoryInfo(cat);
-                            return info ? (
-                              <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full border"
-                                style={{ backgroundColor: `${info.color}10`, color: info.color, borderColor: `${info.color}40` }}>
-                                {info.emoji} {info.label}
-                              </span>
-                            ) : null;
-                          })}
-                        </div>
-                      )}
+                      {occasionCats.map((cat) => {
+                        const info = getCategoryInfo(cat);
+                        return info ? (
+                          <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full border"
+                            style={{ backgroundColor: `${info.color}10`, color: info.color, borderColor: `${info.color}40` }}>
+                            {info.emoji} {info.label}
+                          </span>
+                        ) : null;
+                      })}
                     </>
                   );
                 })()}
