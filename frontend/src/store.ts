@@ -14,6 +14,7 @@ interface AppState {
   removeFromList: (id: string) => void;
   moveToFavorites: (id: string, personalRating?: number, personalNotes?: string) => void;
   updateNotes: (id: string, notes: string) => void;
+  updateCategories: (id: string, categories: import('./types').Category[]) => void;
 
   // Search & Filters
   filters: SearchFilters;
@@ -100,6 +101,13 @@ export const useStore = create<AppState>()(
         set((state) => ({
           savedRestaurants: state.savedRestaurants.map((r) =>
             r.id === id ? { ...r, personalNotes: notes } : r
+          ),
+        })),
+
+      updateCategories: (id, categories) =>
+        set((state) => ({
+          savedRestaurants: state.savedRestaurants.map((r) =>
+            r.id === id ? { ...r, categories } : r
           ),
         })),
 

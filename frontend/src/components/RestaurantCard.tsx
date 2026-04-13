@@ -11,12 +11,14 @@ interface RestaurantCardProps {
 }
 
 export function RestaurantCard({ restaurant, compact = false }: RestaurantCardProps) {
-  const { removeFromList, moveToFavorites, updateNotes, setMapView, setActiveTab } = useStore();
+  const { removeFromList, moveToFavorites, updateNotes, updateCategories, setMapView, setActiveTab } = useStore();
   const [showMoveModal, setShowMoveModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isEditingNotes, setIsEditingNotes] = useState(false);
+  const [isEditingCategories, setIsEditingCategories] = useState(false);
   const [notes, setNotes] = useState(restaurant.personalNotes || '');
   const [rating, setRating] = useState(restaurant.personalRating || 0);
+  const [editedCategories, setEditedCategories] = useState<Category[]>(restaurant.categories);
 
   const getCategoryInfo = (category: Category) =>
     CATEGORIES.find((c) => c.value === category);
@@ -118,19 +120,56 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           </div>
 
           {/* Categories */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {restaurant.categories.map((cat) => {
-              const info = getCategoryInfo(cat);
-              return info ? (
-                <span
-                  key={cat}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full"
-                  style={{ backgroundColor: `${info.color}15`, color: info.color }}
+          <div className="mt-3">
+            {isEditingCategories ? (
+              <div>
+                <div className="flex flex-wrap gap-1.5">
+                  {CATEGORIES.map((cat) => {
+                    const active = editedCategories.includes(cat.value);
+                    return (
+                      <button
+                        key={cat.value}
+                        onClick={() =>
+                          setEditedCategories((prev) =>
+                            active ? prev.filter((c) => c !== cat.value) : [...prev, cat.value]
+                          )
+                        }
+                        className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
+                        style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
+                      >
+                        {cat.emoji} {cat.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex justify-end gap-2 mt-2">
+                  <button onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(false); }} className="p-1.5 text-gray-400 hover:text-gray-600"><X className="w-4 h-4" /></button>
+                  <button onClick={() => { updateCategories(restaurant.id, editedCategories); setIsEditingCategories(false); }} className="p-1.5 text-primary-500 hover:text-primary-600"><Check className="w-4 h-4" /></button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-1.5 items-center group">
+                {restaurant.categories.map((cat) => {
+                  const info = getCategoryInfo(cat);
+                  return info ? (
+                    <span
+                      key={cat}
+                      className="text-xs font-medium px-2.5 py-1 rounded-full"
+                      style={{ backgroundColor: `${info.color}15`, color: info.color }}
+                    >
+                      {info.emoji} {info.label}
+                    </span>
+                  ) : null;
+                })}
+                <button
+                  onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(true); }}
+                  className="p-1 text-gray-300 hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                  title="Edit categories"
                 >
-                  {info.emoji} {info.label}
-                </span>
-              ) : null;
-            })}
+                  <Edit2 className="w-3 h-3" />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Notes */}
