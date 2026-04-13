@@ -38,7 +38,7 @@ export function FilterBar() {
         className="flex items-center gap-1 rounded-full flex-shrink-0 transition-all duration-200 active:scale-95"
         style={isActive
           ? { backgroundColor: cat.color, color: '#fff', padding: '5px 10px 5px 7px' }
-          : { backgroundColor: 'rgba(0,0,0,0.07)', color: '#1c1c1e', padding: '5px 8px' }
+          : { backgroundColor: '#e5e5ea', color: '#1c1c1e', padding: '5px 8px' }
         }
       >
         <span className="text-base leading-none">{cat.emoji}</span>
@@ -90,7 +90,7 @@ export function FilterBar() {
           }`}
           style={filters.city
             ? { backgroundColor: '#0ea5e9' }
-            : { backgroundColor: 'rgba(0,0,0,0.06)' }
+            : { backgroundColor: '#e5e5ea' }
           }
         >
           📍 {filters.city || 'All Cities'}
@@ -116,7 +116,7 @@ export function FilterBar() {
       {hasFilters && (
         <button onClick={clearFilters}
           className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-gray-500 transition-colors active:scale-95"
-          style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+          style={{ backgroundColor: '#e5e5ea' }}>
           <X className="w-3 h-3" /> Clear
         </button>
       )}
