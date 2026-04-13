@@ -43,15 +43,17 @@ export function RestaurantList({ listType }: RestaurantListProps) {
         <EmptyState listType={listType} />
       ) : (
         <div className="flex-1 overflow-y-auto p-4">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <div className="flex items-center justify-between px-2 mb-2">
+          <div className="max-w-2xl mx-auto">
+            <div className="flex items-center justify-between px-1 mb-3">
               <span className="text-sm text-gray-500">
                 {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
               </span>
             </div>
-            {restaurants.map((restaurant) => (
-              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-            ))}
+            <div className="grid grid-cols-2 gap-4">
+              {restaurants.map((restaurant) => (
+                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+              ))}
+            </div>
           </div>
         </div>
       )}
