@@ -32,8 +32,8 @@ interface AppState {
 }
 
 const DEFAULT_MAP_VIEW: MapViewState = {
-  longitude: -122.4194,
-  latitude: 37.7749,
+  longitude: -84.3880,
+  latitude: 33.7490,
   zoom: 12,
 };
 
@@ -116,7 +116,7 @@ export const useStore = create<AppState>()(
       setSelectedRestaurantId: (id) => set({ selectedRestaurantId: id }),
 
       // Cities
-      cities: ['San Francisco', 'New York', 'Los Angeles'],
+      cities: ['Atlanta, GA'],
       addCity: (city) =>
         set((state) => ({
           cities: state.cities.includes(city)
@@ -126,6 +126,12 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'restaurant-tracker-storage',
+      version: 2,
+      migrate: () => ({
+        savedRestaurants: [],
+        cities: ['Atlanta, GA'],
+        mapView: DEFAULT_MAP_VIEW,
+      }),
       partialize: (state) => ({
         savedRestaurants: state.savedRestaurants,
         cities: state.cities,
