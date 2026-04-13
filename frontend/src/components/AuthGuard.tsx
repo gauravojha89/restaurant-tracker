@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Allowlisted GitHub usernames — add wife's username here when ready
-const ALLOWED_USERS = ['gauravojha89'];
+const ALLOWED_USERS = ['gauravojha89', 'poojapandey90'];
 
 interface AuthUser {
   userDetails: string; // GitHub username
