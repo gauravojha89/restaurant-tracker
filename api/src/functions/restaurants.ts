@@ -1,11 +1,25 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { getRestaurantsByUser, upsertRestaurant, deleteRestaurant, RestaurantDocument } from '../cosmos.js';
 
-// All allowed users share one household list
-const HOUSEHOLD_ID = 'household';
+// Users in the same household share one list. Everyone else gets their own.
+const HOUSEHOLDS: Record<string, string> = {
+  'gauravojha89':  'household-gaurav',
+  'poojapandey90': 'household-gaurav',
+};
 
-function getUserId(_req: HttpRequest): string {
-  return HOUSEHOLD_ID;
+function getUserId(req: HttpRequest): string {
+  const principal = req.headers.get('x-ms-client-principal');
+  if (principal) {
+    try {
+      const decoded = Buffer.from(principal, 'base64').toString('utf-8');
+      const parsed = JSON.parse(decoded) as { userDetails?: string; userId?: string };
+      const username = parsed.userDetails || parsed.userId;
+      if (username) return HOUSEHOLDS[username] ?? username;
+    } catch {
+      // fall through
+    }
+  }
+  return 'anonymous';
 }
 
 /**
