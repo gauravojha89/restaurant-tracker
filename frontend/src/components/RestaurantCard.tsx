@@ -83,7 +83,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
   return (
     <>
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+      <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:-translate-y-1 transition-all duration-200 overflow-hidden">
         {/* Header */}
         <div className="p-4">
           <div className="flex items-start justify-between gap-3">
@@ -221,7 +221,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
           {/* Notes */}
           {(restaurant.personalNotes || isEditingNotes) && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
+            <div className="mt-2 pt-2 border-t border-gray-100">
               {isEditingNotes ? (
                 <div>
                   <textarea
@@ -268,7 +268,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           {!restaurant.personalNotes && !isEditingNotes && (
             <button
               onClick={() => setIsEditingNotes(true)}
-              className="mt-3 text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1"
+              className="mt-2 text-xs text-gray-300 hover:text-gray-500 flex items-center gap-1"
             >
               <Edit2 className="w-3.5 h-3.5" />
               Add notes
@@ -277,7 +277,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         </div>
 
         {/* Actions */}
-        <div className="px-4 py-2 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+        <div className="px-4 py-2 border-t border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
               onClick={handleViewOnMap}
