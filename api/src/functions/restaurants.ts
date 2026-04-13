@@ -1,15 +1,20 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { getRestaurantsByUser, upsertRestaurant, deleteRestaurant, RestaurantDocument } from '../cosmos.js';
 
-// Simple user ID extraction (in production, use proper auth like Azure AD B2C)
+// Extract GitHub username from Azure SWA's injected auth header
 function getUserId(req: HttpRequest): string {
-  // Check for user ID in header (for authenticated requests)
-  const userId = req.headers.get('x-user-id');
-  if (userId) return userId;
-
-  // For demo purposes, use a default user
-  // In production, integrate with Azure AD B2C or similar
-  return 'demo-user';
+  const principal = req.headers.get('x-ms-client-principal');
+  if (principal) {
+    try {
+      const decoded = Buffer.from(principal, 'base64').toString('utf-8');
+      const parsed = JSON.parse(decoded) as { userDetails?: string; userId?: string };
+      const id = parsed.userDetails || parsed.userId;
+      if (id) return id;
+    } catch {
+      // fall through
+    }
+  }
+  return 'anonymous';
 }
 
 /**

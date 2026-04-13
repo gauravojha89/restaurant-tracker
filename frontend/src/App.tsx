@@ -1,10 +1,26 @@
+import { useEffect } from 'react';
 import { useStore } from './store';
 import { Header } from './components/Header';
 import { MapView } from './components/MapView';
 import { RestaurantList } from './components/RestaurantList';
 
 function App() {
-  const { activeTab } = useStore();
+  const { activeTab, isLoaded, loadRestaurants } = useStore();
+
+  useEffect(() => {
+    loadRestaurants();
+  }, [loadRestaurants]);
+
+  if (!isLoaded) {
+    return (
+      <div className="h-full flex items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center gap-3 text-gray-400">
+          <div className="w-8 h-8 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin" />
+          <span className="text-sm">Loading your restaurants…</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full flex flex-col bg-gray-50">

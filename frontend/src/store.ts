@@ -2,14 +2,17 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useShallow } from 'zustand/react/shallow';
 import type { SavedRestaurant, SearchFilters, MapViewState } from './types';
+import { fetchRestaurants, upsertRestaurant, deleteRestaurantApi } from './api';
 
 interface AppState {
   // Map state
   mapView: MapViewState;
   setMapView: (view: Partial<MapViewState>) => void;
 
-  // Saved restaurants
+  // Saved restaurants (cloud-backed)
   savedRestaurants: SavedRestaurant[];
+  isLoaded: boolean;
+  loadRestaurants: () => Promise<void>;
   addToList: (restaurant: Omit<SavedRestaurant, 'savedAt'>) => void;
   removeFromList: (id: string) => void;
   moveToFavorites: (id: string, personalRating?: number, personalNotes?: string) => void;
@@ -54,62 +57,81 @@ export const useStore = create<AppState>()(
 
       // Saved restaurants
       savedRestaurants: [],
-      
-      addToList: (restaurant) =>
-        set((state) => {
-          // Check if already exists
-          const exists = state.savedRestaurants.find((r) => r.id === restaurant.id);
-          if (exists) return state;
+      isLoaded: false,
 
-          const newRestaurant: SavedRestaurant = {
-            ...restaurant,
-            savedAt: new Date().toISOString(),
-          };
-          
-          // Add city if new
-          if (!state.cities.includes(restaurant.city)) {
-            return {
-              savedRestaurants: [...state.savedRestaurants, newRestaurant],
-              cities: [...state.cities, restaurant.city],
-            };
-          }
-          
-          return { savedRestaurants: [...state.savedRestaurants, newRestaurant] };
-        }),
-
-      removeFromList: (id) =>
-        set((state) => ({
-          savedRestaurants: state.savedRestaurants.filter((r) => r.id !== id),
-        })),
-
-      moveToFavorites: (id, personalRating, personalNotes) =>
-        set((state) => ({
-          savedRestaurants: state.savedRestaurants.map((r) =>
-            r.id === id
-              ? {
-                  ...r,
-                  listType: 'favorite' as const,
-                  visitedAt: new Date().toISOString(),
-                  personalRating,
-                  personalNotes: personalNotes || r.personalNotes,
+      loadRestaurants: async () => {
+        try {
+          const apiData = await fetchRestaurants();
+          // One-time migration: if API is empty but localStorage has data, push it up
+          if (apiData.length === 0) {
+            const legacy = localStorage.getItem('restaurant-tracker-storage');
+            if (legacy) {
+              try {
+                const parsed = JSON.parse(legacy) as { state?: { savedRestaurants?: SavedRestaurant[] } };
+                const local: SavedRestaurant[] = parsed?.state?.savedRestaurants ?? [];
+                if (local.length > 0) {
+                  await Promise.all(local.map((r) => upsertRestaurant(r)));
+                  set({ savedRestaurants: local, isLoaded: true });
+                  set((state) => ({ cities: [...new Set(local.map((r) => r.city).filter(Boolean))] as string[], savedRestaurants: state.savedRestaurants }));
+                  return;
                 }
-              : r
-          ),
-        })),
+              } catch { /* ignore */ }
+            }
+          }
+          const cities = [...new Set(apiData.map((r) => r.city).filter(Boolean))] as string[];
+          set({ savedRestaurants: apiData, cities, isLoaded: true });
+        } catch (e) {
+          console.error('Failed to load restaurants from API', e);
+          set({ isLoaded: true }); // unblock UI even on error
+        }
+      },
 
-      updateNotes: (id, notes) =>
+      addToList: (restaurant) => {
+        const exists = useStore.getState().savedRestaurants.find((r) => r.id === restaurant.id);
+        if (exists) return;
+        const newRestaurant: SavedRestaurant = { ...restaurant, savedAt: new Date().toISOString() };
         set((state) => ({
-          savedRestaurants: state.savedRestaurants.map((r) =>
-            r.id === id ? { ...r, personalNotes: notes } : r
-          ),
-        })),
+          savedRestaurants: [...state.savedRestaurants, newRestaurant],
+          cities: state.cities.includes(restaurant.city) ? state.cities : [...state.cities, restaurant.city],
+        }));
+        upsertRestaurant(newRestaurant).catch((e) => console.error('addToList sync failed', e));
+      },
 
-      updateCategories: (id, categories) =>
-        set((state) => ({
-          savedRestaurants: state.savedRestaurants.map((r) =>
-            r.id === id ? { ...r, categories } : r
-          ),
-        })),
+      removeFromList: (id) => {
+        set((state) => ({ savedRestaurants: state.savedRestaurants.filter((r) => r.id !== id) }));
+        deleteRestaurantApi(id).catch((e) => console.error('removeFromList sync failed', e));
+      },
+
+      moveToFavorites: (id, personalRating, personalNotes) => {
+        let updated: SavedRestaurant | undefined;
+        set((state) => {
+          const next = state.savedRestaurants.map((r) => {
+            if (r.id !== id) return r;
+            updated = { ...r, listType: 'favorite' as const, visitedAt: new Date().toISOString(), personalRating, personalNotes: personalNotes || r.personalNotes };
+            return updated;
+          });
+          return { savedRestaurants: next };
+        });
+        if (updated) upsertRestaurant(updated).catch((e) => console.error('moveToFavorites sync failed', e));
+      },
+
+      updateNotes: (id, notes) => {
+        let updated: SavedRestaurant | undefined;
+        set((state) => {
+          const next = state.savedRestaurants.map((r) => { if (r.id !== id) return r; updated = { ...r, personalNotes: notes }; return updated; });
+          return { savedRestaurants: next };
+        });
+        if (updated) upsertRestaurant(updated).catch((e) => console.error('updateNotes sync failed', e));
+      },
+
+      updateCategories: (id, categories) => {
+        let updated: SavedRestaurant | undefined;
+        set((state) => {
+          const next = state.savedRestaurants.map((r) => { if (r.id !== id) return r; updated = { ...r, categories }; return updated; });
+          return { savedRestaurants: next };
+        });
+        if (updated) upsertRestaurant(updated).catch((e) => console.error('updateCategories sync failed', e));
+      },
 
       // Search & Filters
       filters: DEFAULT_FILTERS,
@@ -134,22 +156,13 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'restaurant-tracker-storage',
-      version: 3,
-      migrate: (persistedState): Partial<AppState> => {
-        // Preserve all existing data — only fix cities by deriving from saved restaurants
-        const s = persistedState as Partial<AppState>;
-        const saved: SavedRestaurant[] = (s.savedRestaurants ?? []) as SavedRestaurant[];
-        const derivedCities = [...new Set(saved.map((r: SavedRestaurant) => r.city).filter((c: string) => Boolean(c)))];
-        return {
-          savedRestaurants: saved,
-          cities: derivedCities,
-          mapView: s.mapView ?? DEFAULT_MAP_VIEW,
-          activeTab: s.activeTab ?? 'map',
-        };
-      },
+      version: 4,
+      migrate: (): Partial<AppState> => ({
+        // Version 4: restaurants moved to cloud; keep only UI state
+        mapView: DEFAULT_MAP_VIEW,
+        activeTab: 'map',
+      }),
       partialize: (state) => ({
-        savedRestaurants: state.savedRestaurants,
-        cities: state.cities,
         mapView: state.mapView,
         activeTab: state.activeTab,
       }),

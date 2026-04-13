@@ -5,14 +5,11 @@ let client: CosmosClient | null = null;
 let database: Database | null = null;
 let container: Container | null = null;
 
-/**
- * Get Cosmos DB client using Managed Identity (secure by design)
- * Falls back to connection string for local development
- */
 export async function getCosmosContainer(): Promise<Container> {
   if (container) return container;
 
   const endpoint = process.env.COSMOS_ENDPOINT;
+  const key = process.env.COSMOS_KEY;
   const databaseId = process.env.COSMOS_DATABASE || 'restauranttracker';
   const containerId = process.env.COSMOS_CONTAINER || 'restaurants';
 
@@ -20,15 +17,14 @@ export async function getCosmosContainer(): Promise<Container> {
     throw new Error('COSMOS_ENDPOINT environment variable is required');
   }
 
-  // Use Managed Identity (DefaultAzureCredential)
-  // In Azure, this automatically uses the Function App's managed identity
-  // Locally, it uses Azure CLI credentials or other configured credentials
-  const credential = new DefaultAzureCredential();
-
-  client = new CosmosClient({
-    endpoint,
-    aadCredentials: credential,
-  });
+  if (key) {
+    // Key-based auth (used in Azure SWA free tier)
+    client = new CosmosClient({ endpoint, key });
+  } else {
+    // Managed Identity fallback
+    const credential = new DefaultAzureCredential();
+    client = new CosmosClient({ endpoint, aadCredentials: credential });
+  }
 
   database = client.database(databaseId);
   container = database.container(containerId);
