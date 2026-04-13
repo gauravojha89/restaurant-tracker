@@ -29,20 +29,22 @@ export function FilterBar() {
     });
   };
 
-  // Apple Maps-style pill: solid fill when active, neutral fill when inactive
+  // Emoji-only when inactive → expands to emoji + label when active (Apple Maps style)
   const Pill = ({ cat }: { cat: typeof CATEGORIES[0] }) => {
     const isActive = filters.categories.includes(cat.value);
     return (
       <button
         onClick={() => toggleCategory(cat.value)}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium flex-shrink-0 transition-all duration-150 active:scale-95"
+        className="flex items-center gap-1 rounded-full flex-shrink-0 transition-all duration-200 active:scale-95"
         style={isActive
-          ? { backgroundColor: cat.color, color: '#fff' }
-          : { backgroundColor: 'rgba(0,0,0,0.06)', color: '#1c1c1e' }
+          ? { backgroundColor: cat.color, color: '#fff', padding: '5px 10px 5px 7px' }
+          : { backgroundColor: 'rgba(0,0,0,0.07)', color: '#1c1c1e', padding: '5px 8px' }
         }
       >
-        <span className="text-sm leading-none">{cat.emoji}</span>
-        <span>{cat.label}</span>
+        <span className="text-base leading-none">{cat.emoji}</span>
+        {isActive && (
+          <span className="text-xs font-semibold whitespace-nowrap">{cat.label}</span>
+        )}
       </button>
     );
   };
