@@ -173,19 +173,43 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 </div>
               </div>
             ) : (
-              <div className="flex flex-wrap gap-1.5 items-center group">
-                {restaurant.categories.map((cat) => {
-                  const info = getCategoryInfo(cat);
-                  return info ? (
-                    <span
-                      key={cat}
-                      className="text-xs font-medium px-2.5 py-1 rounded-full"
-                      style={{ backgroundColor: `${info.color}15`, color: info.color }}
-                    >
-                      {info.emoji} {info.label}
-                    </span>
-                  ) : null;
-                })}
+              <div className="space-y-1.5 group">
+                {/* Meal type pills */}
+                {(() => {
+                  const mealCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'meal');
+                  const occasionCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'occasion');
+                  return (
+                    <>
+                      {mealCats.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 items-center">
+                          {mealCats.map((cat) => {
+                            const info = getCategoryInfo(cat);
+                            return info ? (
+                              <span key={cat} className="text-xs font-medium px-2.5 py-1 rounded-full"
+                                style={{ backgroundColor: `${info.color}15`, color: info.color }}>
+                                {info.emoji} {info.label}
+                              </span>
+                            ) : null;
+                          })}
+                        </div>
+                      )}
+                      {occasionCats.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 items-center">
+                          <span className="text-xs text-gray-300 font-medium">✦</span>
+                          {occasionCats.map((cat) => {
+                            const info = getCategoryInfo(cat);
+                            return info ? (
+                              <span key={cat} className="text-xs font-medium px-2.5 py-1 rounded-full border"
+                                style={{ backgroundColor: `${info.color}10`, color: info.color, borderColor: `${info.color}40` }}>
+                                {info.emoji} {info.label}
+                              </span>
+                            ) : null;
+                          })}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
                 <button
                   onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(true); }}
                   className="p-1 text-gray-300 hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
