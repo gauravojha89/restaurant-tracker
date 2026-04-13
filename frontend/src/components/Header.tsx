@@ -1,4 +1,4 @@
-import { Map, Heart, MapPin } from 'lucide-react';
+import { Map, Heart, MapPin, LogOut } from 'lucide-react';
 import { useStore, useToVisitList, useFavoritesList } from '../store';
 
 export function Header() {
@@ -64,6 +64,15 @@ export function Header() {
               );
             })}
           </nav>
+
+          {/* Logout */}
+          <a
+            href="/.auth/logout?post_logout_redirect_uri=/"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            title="Sign out"
+          >
+            <LogOut className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </header>
