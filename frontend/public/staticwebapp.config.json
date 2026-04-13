@@ -5,6 +5,18 @@
   },
   "routes": [
     {
+      "route": "/.auth/login/google",
+      "statusCode": 404
+    },
+    {
+      "route": "/.auth/login/apple",
+      "statusCode": 404
+    },
+    {
+      "route": "/.auth/login/twitter",
+      "statusCode": 404
+    },
+    {
       "route": "/login",
       "allowedRoles": ["anonymous"]
     },
