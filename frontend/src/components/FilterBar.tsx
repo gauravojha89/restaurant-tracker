@@ -32,8 +32,8 @@ export function FilterBar() {
 
   return (
     <div className="bg-white border-b border-gray-100 py-3 px-4">
-      <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
-        {/* City Filter */}
+      <div className="flex items-center gap-3">
+        {/* City Filter — kept outside the scrollable track so its dropdown isn't clipped */}
         <div ref={cityDropdownRef} className="relative flex-shrink-0">
           <button
             onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
@@ -84,7 +84,8 @@ export function FilterBar() {
           )}
         </div>
 
-        {/* Category Pills */}
+        {/* Category Pills — scrollable track */}
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide flex-1 pb-1">
         {CATEGORIES.map((cat) => {
           const isActive = filters.categories.includes(cat.value);
           return (
@@ -119,6 +120,7 @@ export function FilterBar() {
             Clear
           </button>
         )}
+        </div>{/* end scrollable track */}
       </div>
     </div>
   );
