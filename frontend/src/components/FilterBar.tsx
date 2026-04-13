@@ -38,7 +38,7 @@ export function FilterBar() {
         className="flex items-center gap-1 rounded-full flex-shrink-0 transition-all duration-200 active:scale-95"
         style={isActive
           ? { backgroundColor: cat.color, color: '#fff', padding: '5px 10px 5px 7px' }
-          : { backgroundColor: 'rgba(0,0,0,0.07)', color: '#1c1c1e', padding: '5px 8px' }
+          : { backgroundColor: `${cat.color}18`, color: cat.color, padding: '5px 8px' }
         }
       >
         <span className="text-base leading-none">{cat.emoji}</span>
@@ -55,7 +55,7 @@ export function FilterBar() {
   }: {
     group: 'meal' | 'occasion' | 'drinks'; label: string; labelColor: string; bgColor: string;
   }) => (
-    <div className="flex items-center" style={{ backgroundColor: bgColor }}>
+    <div className="flex items-center rounded-2xl overflow-hidden" style={{ backgroundColor: bgColor }}>
       {/* Pinned label */}
       <div className="flex-shrink-0 pl-4 pr-3 py-2.5 flex items-center" style={{ backgroundColor: bgColor }}>
         <span className="text-[11px] font-semibold uppercase tracking-widest select-none"
@@ -79,7 +79,7 @@ export function FilterBar() {
   );
 
   const CityRow = () => (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-100">
+    <div className="flex items-center gap-2 px-1 pt-2 pb-1.5">
       <div ref={cityDropdownRef} className="relative flex-shrink-0">
         <button
           onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
@@ -124,11 +124,13 @@ export function FilterBar() {
   );
 
   return (
-    <div className="bg-white border-b border-gray-100 divide-y divide-gray-100">
+    <div className="bg-white border-b border-gray-100 px-3 pb-2.5">
       <CityRow />
-      <Strip group="meal"     label="Meal"     labelColor="#92694a" bgColor="#fdf8f3" />
-      <Strip group="drinks"   label="Drinks"   labelColor="#92400e" bgColor="#fffbeb" />
-      <Strip group="occasion" label="Occasion" labelColor="#5b5b8a" bgColor="#f3f3fa" />
+      <div className="flex flex-col gap-1.5">
+        <Strip group="meal"     label="Meal"     labelColor="#92694a" bgColor="#fdf4ec" />
+        <Strip group="drinks"   label="Drinks"   labelColor="#92400e" bgColor="#fef3c7" />
+        <Strip group="occasion" label="Occasion" labelColor="#5b5b8a" bgColor="#ede9fe" />
+      </div>
     </div>
   );
 }
