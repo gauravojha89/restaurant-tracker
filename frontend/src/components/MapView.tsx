@@ -315,8 +315,8 @@ export function MapView() {
       </div>
       <FilterBar />
 
-      {/* Map container */}
-      <div className="flex-1 relative">
+      {/* Map container — capped height on desktop, flex on mobile */}
+      <div className="flex-1 md:flex-none md:h-[52vh] relative">
         <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 
         {/* CSS for pulse animation */}

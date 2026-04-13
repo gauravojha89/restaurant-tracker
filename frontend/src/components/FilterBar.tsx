@@ -86,11 +86,15 @@ export function FilterBar() {
       <div className="hidden md:flex items-center gap-2 flex-wrap">
         <CityDropdown />
         <div className="w-px h-5 bg-gray-200 flex-shrink-0" />
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide flex-shrink-0">Meal</span>
-        {CATEGORIES.filter(c => c.group === 'meal').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl flex-shrink-0" style={{ backgroundColor: '#fdf6ee' }}>
+          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#92694a' }}>Meal</span>
+          {CATEGORIES.filter(c => c.group === 'meal').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
+        </div>
         <div className="w-px h-5 bg-gray-200 flex-shrink-0" />
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide flex-shrink-0">Occasion</span>
-        {CATEGORIES.filter(c => c.group === 'occasion').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl flex-shrink-0" style={{ backgroundColor: '#f0f0f8' }}>
+          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#5b5b8a' }}>Occasion</span>
+          {CATEGORIES.filter(c => c.group === 'occasion').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
+        </div>
         {hasFilters && (
           <button onClick={clearFilters}
             className="ml-auto flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors flex-shrink-0">
@@ -110,12 +114,12 @@ export function FilterBar() {
             </button>
           )}
         </div>
-        <div className="flex flex-wrap gap-1.5 items-center">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide flex-shrink-0">Meal</span>
+        <div className="flex flex-wrap gap-1.5 items-center px-3 py-2 rounded-xl" style={{ backgroundColor: '#fdf6ee' }}>
+          <span className="text-xs font-semibold uppercase tracking-wide flex-shrink-0" style={{ color: '#92694a' }}>Meal</span>
           {CATEGORIES.filter(c => c.group === 'meal').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
         </div>
-        <div className="flex flex-wrap gap-1.5 items-center">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide flex-shrink-0">Occasion</span>
+        <div className="flex flex-wrap gap-1.5 items-center px-3 py-2 rounded-xl" style={{ backgroundColor: '#f0f0f8' }}>
+          <span className="text-xs font-semibold uppercase tracking-wide flex-shrink-0" style={{ color: '#5b5b8a' }}>Occasion</span>
           {CATEGORIES.filter(c => c.group === 'occasion').map(cat => <CategoryTile key={cat.value} cat={cat} />)}
         </div>
       </div>
