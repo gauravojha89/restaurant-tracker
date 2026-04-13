@@ -35,7 +35,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (authState === 'loading') {
     return (
-      <div className="h-full flex items-center justify-center bg-[#111111]">
+      <div className="h-full flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="text-4xl mb-4">🍽️</div>
           <p className="text-gray-500 text-sm">Loading WishBite…</p>
@@ -46,10 +46,10 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (authState === 'unauthorized') {
     return (
-      <div className="h-full flex items-center justify-center bg-[#111111]">
-        <div className="text-center p-8 bg-[#1c1c1e] rounded-2xl shadow-2xl max-w-sm w-full mx-4">
+      <div className="h-full flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-lg max-w-sm w-full mx-4">
           <div className="text-5xl mb-4">🍽️</div>
-          <h1 className="text-2xl font-bold text-white mb-1">
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
             Wish<span className="text-primary-500">Bite</span>
           </h1>
           <p className="text-gray-500 text-sm mb-6">Your personal restaurant journal</p>
@@ -76,16 +76,16 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (authState === 'forbidden') {
     return (
-      <div className="h-full flex items-center justify-center bg-[#111111]">
-        <div className="text-center p-8 bg-[#1c1c1e] rounded-2xl shadow-2xl max-w-sm w-full mx-4">
+      <div className="h-full flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-lg max-w-sm w-full mx-4">
           <div className="text-5xl mb-4">🚫</div>
-          <h2 className="text-xl font-semibold text-white mb-2">Access Denied</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Access Denied</h2>
           <p className="text-gray-500 text-sm mb-6">
-            <span className="font-medium text-gray-300">@{username}</span> is not on the guest list.
+            <span className="font-medium text-gray-700">@{username}</span> is not on the guest list.
           </p>
           <a
             href="/.auth/logout"
-            className="block w-full bg-[#2c2c2e] hover:bg-[#3a3a3c] text-gray-300 font-medium py-3 px-4 rounded-xl transition-colors text-center"
+            className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl transition-colors text-center"
           >
             Sign out
           </a>

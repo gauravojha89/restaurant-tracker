@@ -49,10 +49,10 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
   if (compact) {
     return (
-      <div className="bg-white rounded-xl border border-[#3a3a3c] p-4 hover:shadow-md transition-shadow" style={{ backgroundColor: '#1c1c1e' }}>
+      <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-medium text-white truncate">{restaurant.name}</h3>
+            <h3 className="font-medium text-gray-900 truncate">{restaurant.name}</h3>
             <p className="text-sm text-gray-500 truncate">{restaurant.city}</p>
             <div className="flex flex-wrap gap-1 mt-2">
               {restaurant.categories.map((cat) => {
@@ -83,20 +83,20 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
   return (
     <>
-      <div className="group/card bg-[#1c1c1e] rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.6)] hover:-translate-y-1 transition-all duration-200 overflow-hidden">
+      <div className="group/card bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:-translate-y-1 transition-all duration-200 overflow-hidden">
         {/* Header */}
         <div className="p-3">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 mb-0.5">
-                <h3 className="text-base font-semibold text-white truncate">
+                <h3 className="text-base font-semibold text-gray-900 truncate">
                   {restaurant.name}
                 </h3>
                 {restaurant.listType === 'favorite' && (
                   <Heart className="w-3.5 h-3.5 text-red-500 fill-current flex-shrink-0" />
                 )}
               </div>
-              <p className="text-xs text-[#636366] flex items-center gap-0.5 truncate">
+              <p className="text-xs text-gray-400 flex items-center gap-0.5 truncate">
                 <MapPin className="w-3 h-3 flex-shrink-0" />
                 {restaurant.address}
               </p>
@@ -111,7 +111,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     className={`w-4 h-4 ${
                       i < restaurant.personalRating!
                         ? 'text-yellow-400 fill-current'
-                        : 'text-[#3a3a3c]'
+                        : 'text-gray-200'
                     }`}
                   />
                 ))}
@@ -124,7 +124,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             {isEditingCategories ? (
               <div>
                 <div className="mb-3">
-                  <p className="text-xs font-medium text-[#636366] mb-1.5">Meal Type</p>
+                  <p className="text-xs font-medium text-gray-400 mb-1.5">Meal Type</p>
                   <div className="flex flex-wrap gap-1.5">
                     {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
                       const active = editedCategories.includes(cat.value);
@@ -137,7 +137,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                             )
                           }
                           className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
-                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#3a3a3c', color: '#9ca3af' }}
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
                         >
                           {cat.emoji} {cat.label}
                         </button>
@@ -146,29 +146,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-[#636366] mb-1.5">Drinks</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {CATEGORIES.filter(c => c.group === 'drinks').map((cat) => {
-                      const active = editedCategories.includes(cat.value);
-                      return (
-                        <button
-                          key={cat.value}
-                          onClick={() =>
-                            setEditedCategories((prev) =>
-                              active ? prev.filter((c) => c !== cat.value) : [...prev, cat.value]
-                            )
-                          }
-                          className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
-                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#3a3a3c', color: '#9ca3af' }}
-                        >
-                          {cat.emoji} {cat.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-[#636366] mb-1.5">Occasion</p>
+                  <p className="text-xs font-medium text-gray-400 mb-1.5">Occasion</p>
                   <div className="flex flex-wrap gap-1.5">
                     {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
                       const active = editedCategories.includes(cat.value);
@@ -181,7 +159,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                             )
                           }
                           className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
-                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#3a3a3c', color: '#9ca3af' }}
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
                         >
                           {cat.emoji} {cat.label}
                         </button>
@@ -197,17 +175,33 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             ) : (
               <div className="flex flex-wrap items-center gap-1 group">
                 {(() => {
-                  const allCats = restaurant.categories;
+                  const mealCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'meal');
+                  const occasionCats = restaurant.categories.filter(cat => CATEGORIES.find(c => c.value === cat)?.group === 'occasion');
                   return (
                     <>
-                      {allCats.map((cat) => {
+                      {mealCats.map((cat) => {
                         const info = getCategoryInfo(cat);
                         return info ? (
                           <span key={cat}
                             className="flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-md text-xs font-medium border"
-                            style={{ borderColor: `${info.color}40`, backgroundColor: `${info.color}15` }}>
+                            style={{ borderColor: `${info.color}30`, backgroundColor: `${info.color}10` }}>
                             <span className="w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0"
-                              style={{ backgroundColor: `${info.color}30` }}>{info.emoji}</span>
+                              style={{ backgroundColor: `${info.color}25` }}>{info.emoji}</span>
+                            <span style={{ color: info.color }}>{info.label}</span>
+                          </span>
+                        ) : null;
+                      })}
+                      {mealCats.length > 0 && occasionCats.length > 0 && (
+                        <span className="text-gray-200 text-xs select-none">&middot;</span>
+                      )}
+                      {occasionCats.map((cat) => {
+                        const info = getCategoryInfo(cat);
+                        return info ? (
+                          <span key={cat}
+                            className="flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-md text-xs font-medium border"
+                            style={{ borderColor: `${info.color}30`, backgroundColor: `${info.color}08` }}>
+                            <span className="w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0"
+                              style={{ backgroundColor: `${info.color}20` }}>{info.emoji}</span>
                             <span style={{ color: info.color }}>{info.label}</span>
                           </span>
                         ) : null;
@@ -228,14 +222,14 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
           {/* Notes */}
           {(restaurant.personalNotes || isEditingNotes) && (
-            <div className="mt-2 pt-2 border-t border-[#2c2c2e]">
+            <div className="mt-2 pt-2 border-t border-gray-100">
               {isEditingNotes ? (
                 <div>
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Add your notes..."
-                    className="w-full px-3 py-2 bg-[#2c2c2e] border border-[#3a3a3c] rounded-lg text-sm text-white
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm
                                focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
                     rows={3}
                   />
@@ -259,7 +253,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 </div>
               ) : (
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm text-gray-400 italic">"{restaurant.personalNotes}"</p>
+                  <p className="text-sm text-gray-600 italic">"{restaurant.personalNotes}"</p>
                   <button
                     onClick={() => setIsEditingNotes(true)}
                     className="p-1 text-gray-400 hover:text-gray-600 flex-shrink-0"
@@ -275,7 +269,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           {!restaurant.personalNotes && !isEditingNotes && (
             <button
               onClick={() => setIsEditingNotes(true)}
-              className="mt-1 text-xs text-[#3a3a3c] hover:text-gray-500 flex items-center gap-1 opacity-0 group-hover/card:opacity-100 transition-opacity"
+              className="mt-1 text-xs text-gray-300 hover:text-gray-500 flex items-center gap-1 opacity-0 group-hover/card:opacity-100 transition-opacity"
             >
               <Edit2 className="w-3 h-3" />
               Add note
@@ -284,7 +278,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         </div>
 
         {/* Actions */}
-        <div className="px-3 py-1.5 border-t border-[#2c2c2e] flex items-center justify-between">
+        <div className="px-3 py-1.5 border-t border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-1">
             <button
               onClick={handleViewOnMap}
@@ -309,7 +303,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
               <button
                 onClick={() => setShowMoveModal(true)}
                 className="flex items-center gap-1 px-2 py-1 text-xs font-medium
-                         text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-md transition-colors"
+                           text-red-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
               >
                 <Heart className="w-3.5 h-3.5" />
                 Visited!
@@ -317,7 +311,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             )}
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="p-1 text-gray-600 hover:text-red-400 hover:bg-red-900/20 rounded-md transition-colors"
+              className="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
               title="Remove"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -334,13 +328,13 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-400">
-            How was <span className="font-medium text-white">{restaurant.name}</span>?
+          <p className="text-gray-600">
+            How was <span className="font-medium text-gray-900">{restaurant.name}</span>?
           </p>
 
           {/* Star Rating */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Your Rating</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Your Rating</label>
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -350,7 +344,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 >
                   <Star
                     className={`w-8 h-8 ${
-                      star <= rating ? 'text-yellow-400 fill-current' : 'text-[#3a3a3c]'
+                      star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-200'
                     }`}
                   />
                 </button>
@@ -360,12 +354,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Notes (optional)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Notes (optional)</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="What did you love about this place?"
-              className="w-full px-3 py-2 bg-[#2c2c2e] border border-[#3a3a3c] rounded-lg text-sm text-white
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm
                          focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
               rows={3}
             />
@@ -374,7 +368,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           <div className="flex justify-end gap-3 pt-2">
             <button
               onClick={() => setShowMoveModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white"
+              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
             >
               Cancel
             </button>
@@ -398,14 +392,14 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-400">
+          <p className="text-gray-600">
             Are you sure you want to remove{' '}
-            <span className="font-medium text-white">{restaurant.name}</span> from your list?
+            <span className="font-medium text-gray-900">{restaurant.name}</span> from your list?
           </p>
           <div className="flex justify-end gap-3 pt-2">
             <button
               onClick={() => setShowDeleteConfirm(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white"
+              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
             >
               Cancel
             </button>

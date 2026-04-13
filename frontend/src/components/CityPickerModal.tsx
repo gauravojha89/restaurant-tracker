@@ -29,9 +29,9 @@ export function CityPickerModal({ onDone, title = "Where are you based?" }: City
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-[#1c1c1e] rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
         <div className="text-4xl mb-3">📍</div>
-        <h2 className="text-xl font-bold text-white mb-1">{title}</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-1">{title}</h2>
         <p className="text-sm text-gray-500 mb-6">
           We'll center the map on your home city by default.
         </p>
@@ -42,7 +42,7 @@ export function CityPickerModal({ onDone, title = "Where are you based?" }: City
           onKeyDown={(e) => e.key === 'Enter' && handleConfirm()}
           placeholder="e.g. Atlanta, GA"
           autoFocus
-          className="w-full px-4 py-3 bg-[#2c2c2e] border border-[#3a3a3c] rounded-xl text-white placeholder-[#636366] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 mb-2"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 mb-2"
         />
         {error && <p className="text-xs text-red-500 mb-3">{error}</p>}
         <button
