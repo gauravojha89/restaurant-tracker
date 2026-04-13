@@ -12,14 +12,14 @@ function EmptyState({ listType }: { listType: 'toVisit' | 'favorite' }) {
   return (
     <div className="flex-1 flex items-center justify-center p-8">
       <div className="text-center max-w-sm">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#2c2c2e] flex items-center justify-center">
           {listType === 'toVisit' ? (
-            <MapPin className="w-8 h-8 text-gray-400" />
+            <MapPin className="w-8 h-8 text-[#636366]" />
           ) : (
-            <Heart className="w-8 h-8 text-gray-400" />
+            <Heart className="w-8 h-8 text-[#636366]" />
           )}
         </div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+        <h2 className="text-xl font-semibold text-white mb-2">
           {listType === 'toVisit' ? 'No places to visit yet' : 'No favorites yet'}
         </h2>
         <p className="text-gray-500">
@@ -36,7 +36,7 @@ export function RestaurantList({ listType }: RestaurantListProps) {
   const restaurants = useFilteredRestaurants(listType);
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50">
+    <div className="flex-1 flex flex-col bg-[#111111]">
       <FilterBar />
 
       {restaurants.length === 0 ? (

@@ -62,18 +62,18 @@ function restaurantPopupHtml(r: SavedRestaurant): string {
   }).join('');
 
   const notes = r.personalNotes
-    ? `<p style="font-size:12px;color:#555;font-style:italic;
-        margin:10px 0 0;padding-top:10px;border-top:1px solid #eee;">
+    ? `<p style="font-size:12px;color:#8e8e93;font-style:italic;
+        margin:10px 0 0;padding-top:10px;border-top:1px solid #3a3a3c;">
         "${r.personalNotes}"</p>`
     : '';
 
   return `
-    <div style="padding:16px;min-width:220px;font-family:system-ui,sans-serif;box-sizing:border-box;">
+    <div style="padding:16px;min-width:220px;font-family:system-ui,sans-serif;box-sizing:border-box;background:#1c1c1e;border-radius:12px;">
       <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;">
-        <strong style="font-size:15px;color:#111;flex:1;">${r.name}</strong>
+        <strong style="font-size:15px;color:#f0f0f0;flex:1;">${r.name}</strong>
         ${r.listType === 'favorite' ? '<span style="flex-shrink:0;">❤️</span>' : ''}
       </div>
-      <p style="font-size:12px;color:#888;margin:0 0 10px;">📍 ${r.city}</p>
+      <p style="font-size:12px;color:#8e8e93;margin:0 0 10px;">📍 ${r.city}</p>
       <div style="display:flex;flex-wrap:wrap;gap:4px;">${chips}</div>
       ${notes}
     </div>`;
@@ -117,13 +117,13 @@ export function MapView() {
         authType: atlas.AuthenticationType.subscriptionKey,
         subscriptionKey: AZURE_MAPS_KEY,
       },
-      style: 'grayscale_light',
+      style: 'grayscale_dark',
       showFeedbackLink: false,
       showLogo: false,
     });
 
     map.controls.add(
-      [new atlas.control.ZoomControl({ zoomDelta: 1, style: atlas.ControlStyle.light })],
+      [new atlas.control.ZoomControl({ zoomDelta: 1, style: atlas.ControlStyle.dark })],
       { position: atlas.ControlPosition.BottomRight }
     );
 
@@ -296,12 +296,12 @@ export function MapView() {
   // ── No key configured state ──────────────────
   if (!AZURE_MAPS_KEY) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-100">
-        <div className="text-center p-8 bg-white rounded-2xl shadow-lg max-w-md">
+        <div className="flex-1 flex items-center justify-center bg-[#111111]">
+        <div className="text-center p-8 bg-[#1c1c1e] rounded-2xl shadow-lg max-w-md">
           <div className="text-4xl mb-4">🗺️</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Azure Maps Key Needed</h2>
-          <p className="text-gray-600 mb-3">Add your Azure Maps key to the <code className="bg-gray-100 px-1 rounded">.env</code> file:</p>
-          <code className="block bg-gray-100 p-3 rounded-lg text-sm text-left">VITE_AZURE_MAPS_KEY=your_key_here</code>
+          <h2 className="text-xl font-semibold text-white mb-2">Azure Maps Key Needed</h2>
+          <p className="text-gray-400 mb-3">Add your Azure Maps key to the <code className="bg-[#2c2c2e] px-1 rounded text-gray-300">.env</code> file:</p>
+          <code className="block bg-[#2c2c2e] p-3 rounded-lg text-sm text-left text-gray-300">VITE_AZURE_MAPS_KEY=your_key_here</code>
         </div>
       </div>
     );
@@ -310,7 +310,7 @@ export function MapView() {
   return (
     <div className="flex-1 flex flex-col">
       {/* Search bar */}
-      <div className="p-4 bg-white border-b border-gray-200">
+      <div className="p-4 bg-[#1c1c1e] border-b border-[#3a3a3c]">
         <SearchBar onSelectResult={handleSearchSelect} />
       </div>
       <FilterBar />
@@ -330,11 +330,11 @@ export function MapView() {
         {/* Selected place card */}
         {selectedPlace && !isAlreadySaved(selectedPlace.id) && (
           <div className="absolute bottom-6 left-4 right-4 mx-auto max-w-md pointer-events-none">
-            <div className="bg-white rounded-2xl shadow-2xl p-4 border border-gray-200 pointer-events-auto">
+            <div className="bg-[#1c1c1e] rounded-2xl shadow-2xl p-4 border border-[#3a3a3c] pointer-events-auto">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-gray-900 truncate">{selectedPlace.name}</h3>
-                  <p className="text-sm text-gray-500 truncate">{selectedPlace.address}</p>
+                  <h3 className="font-semibold text-white truncate">{selectedPlace.name}</h3>
+                  <p className="text-sm text-gray-400 truncate">{selectedPlace.address}</p>
                 </div>
                 <button
                   onClick={() => setShowAddModal(true)}
@@ -356,12 +356,12 @@ export function MapView() {
         {selectedPlace && (
           <div className="space-y-5">
             <div>
-              <h3 className="font-semibold text-gray-900 text-lg">{selectedPlace.name}</h3>
-              <p className="text-gray-500 text-sm">{selectedPlace.address}</p>
+              <h3 className="font-semibold text-white text-lg">{selectedPlace.name}</h3>
+              <p className="text-gray-400 text-sm">{selectedPlace.address}</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Meal Type</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Meal Type</label>
               <div className="flex flex-wrap gap-2 mb-4">
                 {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -372,7 +372,7 @@ export function MapView() {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-[#2c2c2e] border-[#3a3a3c] text-gray-300 hover:bg-[#3a3a3c]'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >
@@ -382,7 +382,28 @@ export function MapView() {
                   );
                 })}
               </div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Occasion</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Drinks</label>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {CATEGORIES.filter(c => c.group === 'drinks').map((cat) => {
+                  const isSelected = selectedCategories.includes(cat.value);
+                  return (
+                    <button
+                      key={cat.value}
+                      onClick={() => toggleCategory(cat.value)}
+                      className={`
+                        flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
+                        transition-all duration-200 border
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-[#2c2c2e] border-[#3a3a3c] text-gray-300 hover:bg-[#3a3a3c]'}
+                      `}
+                      style={isSelected ? { backgroundColor: cat.color } : undefined}
+                    >
+                      <span>{cat.emoji}</span>
+                      <span>{cat.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Occasion</label>
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -393,7 +414,7 @@ export function MapView() {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-[#2c2c2e] border-[#3a3a3c] text-gray-300 hover:bg-[#3a3a3c]'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >

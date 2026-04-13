@@ -1,4 +1,4 @@
-# 🍽️ FoodieMap - Restaurant Tracker
+2# 🍽️ FoodieMap - Restaurant Tracker
 
 A personal web app to discover and track restaurants you want to visit and your favorites. Search restaurants on an interactive map, categorize them, and manage your food adventures!
 

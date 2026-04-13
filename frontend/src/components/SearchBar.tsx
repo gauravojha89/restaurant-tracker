@@ -100,7 +100,7 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
   return (
     <div className="relative w-full max-w-xl">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
         <input
           ref={inputRef}
           type="text"
@@ -109,13 +109,13 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
           onKeyDown={handleKeyDown}
           onFocus={() => results.length > 0 && setIsOpen(true)}
           placeholder="Search restaurants, cafes, bars..."
-          className="w-full pl-10 pr-10 py-3 bg-white border border-gray-200 rounded-xl
-                     text-gray-900 placeholder-gray-400
+          className="w-full pl-10 pr-10 py-3 bg-[#2c2c2e] border border-[#3a3a3c] rounded-xl
+                     text-white placeholder-[#636366]
                      focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-                     shadow-sm transition-shadow hover:shadow-md"
+                     shadow-sm transition-shadow"
         />
         {isLoading && (
-          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 animate-spin" />
+          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 animate-spin" />
         )}
         {!isLoading && query && (
           <button
@@ -124,7 +124,7 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
               setResults([]);
               setIsOpen(false);
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-300"
           >
             <X className="w-4 h-4" />
           </button>
@@ -135,23 +135,23 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
       {isOpen && results.length > 0 && (
         <div
           ref={resultsRef}
-          className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50"
+          className="absolute top-full left-0 right-0 mt-2 bg-[#1c1c1e] border border-[#3a3a3c] rounded-xl shadow-2xl overflow-hidden z-50"
         >
           <div className="max-h-80 overflow-y-auto">
             {results.map((result, index) => (
               <button
                 key={result.id}
                 onClick={() => handleSelectResult(result)}
-                className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors
+                className={`w-full px-4 py-3 text-left hover:bg-[#2c2c2e] transition-colors
                            flex items-start gap-3 ${
-                             selectedIndex === index ? 'bg-primary-50' : ''
+                             selectedIndex === index ? 'bg-primary-900/20' : ''
                            }`}
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-800/30 flex items-center justify-center">
                   <span className="text-sm">📍</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 truncate">{result.name}</p>
+                  <p className="font-medium text-white truncate">{result.name}</p>
                   <p className="text-sm text-gray-500 truncate">{result.address}</p>
                 </div>
               </button>

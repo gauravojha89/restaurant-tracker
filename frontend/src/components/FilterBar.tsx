@@ -38,7 +38,7 @@ export function FilterBar() {
         className="flex items-center gap-1 rounded-full flex-shrink-0 transition-all duration-200 active:scale-95"
         style={isActive
           ? { backgroundColor: cat.color, color: '#fff', padding: '5px 10px 5px 7px' }
-          : { backgroundColor: '#e5e5ea', color: '#1c1c1e', padding: '5px 8px' }
+          : { backgroundColor: '#3a3a3c', color: '#e5e5ea', padding: '5px 8px' }
         }
       >
         <span className="text-base leading-none">{cat.emoji}</span>
@@ -49,15 +49,15 @@ export function FilterBar() {
     );
   };
 
-  // Horizontal scroll strip: pinned label left, pills scroll right with fade edge
+  // Pill-shaped rounded card: label pinned left, pills scroll right
   const Strip = ({
     group, label, labelColor, bgColor,
   }: {
     group: 'meal' | 'occasion' | 'drinks'; label: string; labelColor: string; bgColor: string;
   }) => (
-    <div className="flex items-center" style={{ backgroundColor: bgColor }}>
+    <div className="flex items-center rounded-2xl overflow-hidden mx-2" style={{ backgroundColor: bgColor }}>
       {/* Pinned label */}
-      <div className="flex-shrink-0 pl-4 pr-3 py-2.5 flex items-center" style={{ backgroundColor: bgColor }}>
+      <div className="flex-shrink-0 pl-4 pr-3 py-2.5 flex items-center">
         <span className="text-[11px] font-semibold uppercase tracking-widest select-none"
           style={{ color: labelColor }}>{label}</span>
       </div>
@@ -79,33 +79,33 @@ export function FilterBar() {
   );
 
   const CityRow = () => (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-100">
+    <div className="flex items-center gap-2 px-3 py-2">
       <div ref={cityDropdownRef} className="relative flex-shrink-0">
         <button
           onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
             filters.city
               ? 'text-white'
-              : 'text-gray-700'
+              : 'text-[#e5e5ea]'
           }`}
           style={filters.city
             ? { backgroundColor: '#0ea5e9' }
-            : { backgroundColor: '#e5e5ea' }
+            : { backgroundColor: '#3a3a3c' }
           }
         >
           📍 {filters.city || 'All Cities'}
           <ChevronDown className="w-3.5 h-3.5" />
         </button>
         {cityDropdownOpen && (
-          <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 overflow-hidden">
+          <div className="absolute top-full left-0 mt-2 w-48 bg-[#1c1c1e] border border-[#3a3a3c] rounded-2xl shadow-2xl z-50 overflow-hidden">
             <div className="max-h-64 overflow-y-auto">
               <button onClick={() => { setFilters({ city: '' }); setCityDropdownOpen(false); }}
-                className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 ${!filters.city ? 'text-primary-600 font-medium' : 'text-gray-700'}`}>
+                className={`w-full px-4 py-3 text-left text-sm hover:bg-[#2c2c2e] ${!filters.city ? 'text-primary-400 font-medium' : 'text-[#e5e5ea]'}`}>
                 All Cities
               </button>
               {cities.map(city => (
                 <button key={city} onClick={() => { setFilters({ city }); setCityDropdownOpen(false); }}
-                  className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 ${filters.city === city ? 'text-primary-600 font-medium' : 'text-gray-700'}`}>
+                  className={`w-full px-4 py-3 text-left text-sm hover:bg-[#2c2c2e] ${filters.city === city ? 'text-primary-400 font-medium' : 'text-[#e5e5ea]'}`}>
                   {city}
                 </button>
               ))}
@@ -115,8 +115,8 @@ export function FilterBar() {
       </div>
       {hasFilters && (
         <button onClick={clearFilters}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-gray-500 transition-colors active:scale-95"
-          style={{ backgroundColor: '#e5e5ea' }}>
+          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-[#aeaeb2] transition-colors active:scale-95"
+          style={{ backgroundColor: '#3a3a3c' }}>
           <X className="w-3 h-3" /> Clear
         </button>
       )}
@@ -124,11 +124,11 @@ export function FilterBar() {
   );
 
   return (
-    <div className="bg-white border-b border-gray-100 divide-y divide-gray-100">
+    <div className="bg-[#111111] border-b border-[#2c2c2e] flex flex-col gap-1.5 pb-2">
       <CityRow />
-      <Strip group="meal"     label="Meal"     labelColor="#92694a" bgColor="#fdf8f3" />
-      <Strip group="drinks"   label="Drinks"   labelColor="#92400e" bgColor="#fffbeb" />
-      <Strip group="occasion" label="Occasion" labelColor="#5b5b8a" bgColor="#f3f3fa" />
+      <Strip group="meal"     label="Meal"     labelColor="#d4956a" bgColor="#1e1810" />
+      <Strip group="drinks"   label="Drinks"   labelColor="#fbbf24" bgColor="#1e1700" />
+      <Strip group="occasion" label="Occasion" labelColor="#9999cc" bgColor="#18182a" />
     </div>
   );
 }

@@ -22,9 +22,9 @@ function App() {
 
   if (!isLoaded) {
     return (
-      <div className="h-full flex items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
-          <div className="w-8 h-8 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin" />
+      <div className="h-full flex items-center justify-center bg-[#111111]">
+        <div className="flex flex-col items-center gap-3 text-gray-500">
+          <div className="w-8 h-8 border-2 border-[#3a3a3c] border-t-primary-500 rounded-full animate-spin" />
           <span className="text-sm">Loading your restaurants…</span>
         </div>
       </div>
@@ -32,7 +32,7 @@ function App() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-gray-50">
+    <div className="h-full flex flex-col bg-[#111111]">
       <Header onChangeCityClick={() => setShowCityPicker(true)} />
       <main className="flex-1 flex flex-col overflow-hidden">
         {activeTab === 'map' && <MapView />}
