@@ -361,9 +361,30 @@ export function MapView() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Categories</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Meal Type</label>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
+                  const isSelected = selectedCategories.includes(cat.value);
+                  return (
+                    <button
+                      key={cat.value}
+                      onClick={() => toggleCategory(cat.value)}
+                      className={`
+                        flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
+                        transition-all duration-200 border
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                      `}
+                      style={isSelected ? { backgroundColor: cat.color } : undefined}
+                    >
+                      <span>{cat.emoji}</span>
+                      <span>{cat.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Occasion</label>
               <div className="flex flex-wrap gap-2">
-                {CATEGORIES.map((cat) => {
+                {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
                   return (
                     <button

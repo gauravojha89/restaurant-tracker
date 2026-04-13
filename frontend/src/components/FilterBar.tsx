@@ -31,7 +31,8 @@ export function FilterBar() {
   };
 
   return (
-    <div className="bg-white border-b border-gray-100 py-3 px-4">
+    <div className="bg-white border-b border-gray-100 py-2 px-4 space-y-2">
+      {/* Row 1: City + Meal types */}
       <div className="flex items-center gap-3">
         {/* City Filter — kept outside the scrollable track so its dropdown isn't clipped */}
         <div ref={cityDropdownRef} className="relative flex-shrink-0">
@@ -86,7 +87,7 @@ export function FilterBar() {
 
         {/* Category Pills — scrollable track */}
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide flex-1 pb-1">
-        {CATEGORIES.map((cat) => {
+        {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
           const isActive = filters.categories.includes(cat.value);
           return (
             <button
@@ -121,6 +122,29 @@ export function FilterBar() {
           </button>
         )}
         </div>{/* end scrollable track */}
+      </div>
+
+      {/* Row 2: Occasion filters */}
+      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1">
+        <span className="text-xs font-medium text-gray-400 flex-shrink-0">Occasion</span>
+        {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
+          const isActive = filters.categories.includes(cat.value);
+          return (
+            <button
+              key={cat.value}
+              onClick={() => toggleCategory(cat.value)}
+              className={`
+                flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
+                transition-all duration-200 flex-shrink-0
+                ${isActive ? 'text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}
+              `}
+              style={isActive ? { backgroundColor: cat.color } : undefined}
+            >
+              <span>{cat.emoji}</span>
+              <span>{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

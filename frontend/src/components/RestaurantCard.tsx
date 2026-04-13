@@ -123,24 +123,49 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           <div className="mt-3">
             {isEditingCategories ? (
               <div>
-                <div className="flex flex-wrap gap-1.5">
-                  {CATEGORIES.map((cat) => {
-                    const active = editedCategories.includes(cat.value);
-                    return (
-                      <button
-                        key={cat.value}
-                        onClick={() =>
-                          setEditedCategories((prev) =>
-                            active ? prev.filter((c) => c !== cat.value) : [...prev, cat.value]
-                          )
-                        }
-                        className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
-                        style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
-                      >
-                        {cat.emoji} {cat.label}
-                      </button>
-                    );
-                  })}
+                <div className="mb-3">
+                  <p className="text-xs font-medium text-gray-400 mb-1.5">Meal Type</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
+                      const active = editedCategories.includes(cat.value);
+                      return (
+                        <button
+                          key={cat.value}
+                          onClick={() =>
+                            setEditedCategories((prev) =>
+                              active ? prev.filter((c) => c !== cat.value) : [...prev, cat.value]
+                            )
+                          }
+                          className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
+                        >
+                          {cat.emoji} {cat.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-400 mb-1.5">Occasion</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
+                      const active = editedCategories.includes(cat.value);
+                      return (
+                        <button
+                          key={cat.value}
+                          onClick={() =>
+                            setEditedCategories((prev) =>
+                              active ? prev.filter((c) => c !== cat.value) : [...prev, cat.value]
+                            )
+                          }
+                          className="text-xs font-medium px-2.5 py-1 rounded-full border transition-all"
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}
+                        >
+                          {cat.emoji} {cat.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
                 <div className="flex justify-end gap-2 mt-2">
                   <button onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(false); }} className="p-1.5 text-gray-400 hover:text-gray-600"><X className="w-4 h-4" /></button>
