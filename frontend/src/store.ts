@@ -165,11 +165,14 @@ export const useStore = create<AppState>()(
     {
       name: 'restaurant-tracker-storage',
       version: 4,
-      migrate: (): Partial<AppState> => ({
-        // Version 4: restaurants moved to cloud; keep only UI state
-        mapView: DEFAULT_MAP_VIEW,
-        activeTab: 'map',
-      }),
+      migrate: (persistedState): Partial<AppState> => {
+        const s = persistedState as Partial<AppState>;
+        return {
+          mapView: s.mapView ?? DEFAULT_MAP_VIEW,
+          activeTab: s.activeTab ?? 'map',
+          defaultCity: s.defaultCity ?? null,
+        };
+      },
       partialize: (state) => ({
         mapView: state.mapView,
         activeTab: state.activeTab,
