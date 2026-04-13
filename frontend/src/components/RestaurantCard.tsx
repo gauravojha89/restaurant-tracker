@@ -182,9 +182,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                       {mealCats.map((cat) => {
                         const info = getCategoryInfo(cat);
                         return info ? (
-                          <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full"
-                            style={{ backgroundColor: `${info.color}15`, color: info.color }}>
-                            {info.emoji} {info.label}
+                          <span key={cat}
+                            className="flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-md text-xs font-medium border"
+                            style={{ borderColor: `${info.color}30`, backgroundColor: `${info.color}10` }}>
+                            <span className="w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0"
+                              style={{ backgroundColor: `${info.color}25` }}>{info.emoji}</span>
+                            <span style={{ color: info.color }}>{info.label}</span>
                           </span>
                         ) : null;
                       })}
@@ -194,9 +197,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                       {occasionCats.map((cat) => {
                         const info = getCategoryInfo(cat);
                         return info ? (
-                          <span key={cat} className="text-xs font-medium px-2 py-0.5 rounded-full border"
-                            style={{ backgroundColor: `${info.color}10`, color: info.color, borderColor: `${info.color}40` }}>
-                            {info.emoji} {info.label}
+                          <span key={cat}
+                            className="flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-md text-xs font-medium border"
+                            style={{ borderColor: `${info.color}30`, backgroundColor: `${info.color}08` }}>
+                            <span className="w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0"
+                              style={{ backgroundColor: `${info.color}20` }}>{info.emoji}</span>
+                            <span style={{ color: info.color }}>{info.label}</span>
                           </span>
                         ) : null;
                       })}
