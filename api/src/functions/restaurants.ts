@@ -1,20 +1,11 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { getRestaurantsByUser, upsertRestaurant, deleteRestaurant, RestaurantDocument } from '../cosmos.js';
 
-// Extract GitHub username from Azure SWA's injected auth header
-function getUserId(req: HttpRequest): string {
-  const principal = req.headers.get('x-ms-client-principal');
-  if (principal) {
-    try {
-      const decoded = Buffer.from(principal, 'base64').toString('utf-8');
-      const parsed = JSON.parse(decoded) as { userDetails?: string; userId?: string };
-      const id = parsed.userDetails || parsed.userId;
-      if (id) return id;
-    } catch {
-      // fall through
-    }
-  }
-  return 'anonymous';
+// All allowed users share one household list
+const HOUSEHOLD_ID = 'household';
+
+function getUserId(_req: HttpRequest): string {
+  return HOUSEHOLD_ID;
 }
 
 /**
