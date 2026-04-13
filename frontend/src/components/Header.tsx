@@ -20,7 +20,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <span className="text-2xl">🍽️</span>
             <h1 className="text-xl font-semibold text-gray-900">
-              Foodie<span className="text-primary-500">Map</span>
+              Wish<span className="text-primary-500">Bite</span>
             </h1>
           </div>
 
