@@ -30,6 +30,10 @@ interface AppState {
   selectedRestaurantId: string | null;
   setSelectedRestaurantId: (id: string | null) => void;
 
+  // Default home city (null = not set yet → show picker)
+  defaultCity: string | null;
+  setDefaultCity: (city: string) => void;
+
   // Cities (derived from saved restaurants + default)
   cities: string[];
   addCity: (city: string) => void;
@@ -145,6 +149,10 @@ export const useStore = create<AppState>()(
       selectedRestaurantId: null,
       setSelectedRestaurantId: (id) => set({ selectedRestaurantId: id }),
 
+      // Default city
+      defaultCity: null,
+      setDefaultCity: (city) => set({ defaultCity: city }),
+
       // Cities
       cities: [],
       addCity: (city) =>
@@ -165,6 +173,7 @@ export const useStore = create<AppState>()(
       partialize: (state) => ({
         mapView: state.mapView,
         activeTab: state.activeTab,
+        defaultCity: state.defaultCity,
       }),
     }
   )

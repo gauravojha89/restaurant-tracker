@@ -1,8 +1,12 @@
 import { Map, Heart, MapPin, LogOut } from 'lucide-react';
 import { useStore, useToVisitList, useFavoritesList } from '../store';
 
-export function Header() {
-  const { activeTab, setActiveTab } = useStore();
+interface HeaderProps {
+  onChangeCityClick: () => void;
+}
+
+export function Header({ onChangeCityClick }: HeaderProps) {
+  const { activeTab, setActiveTab, defaultCity } = useStore();
   const toVisitList = useToVisitList();
   const favoritesList = useFavoritesList();
 
@@ -64,6 +68,16 @@ export function Header() {
               );
             })}
           </nav>
+
+          {/* City indicator */}
+          <button
+            onClick={onChangeCityClick}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+            title="Change default city"
+          >
+            <MapPin className="w-3.5 h-3.5 text-primary-500" />
+            {defaultCity ?? 'Set city'}
+          </button>
 
           {/* Logout */}
           <a

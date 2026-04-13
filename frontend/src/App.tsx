@@ -1,15 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from './store';
 import { Header } from './components/Header';
 import { MapView } from './components/MapView';
 import { RestaurantList } from './components/RestaurantList';
+import { CityPickerModal } from './components/CityPickerModal';
 
 function App() {
-  const { activeTab, isLoaded, loadRestaurants } = useStore();
+  const { activeTab, isLoaded, loadRestaurants, defaultCity } = useStore();
+  const [showCityPicker, setShowCityPicker] = useState(false);
 
   useEffect(() => {
     loadRestaurants();
   }, [loadRestaurants]);
+
+  // Show city picker once restaurants are loaded and no default city is set
+  useEffect(() => {
+    if (isLoaded && defaultCity === null) {
+      setShowCityPicker(true);
+    }
+  }, [isLoaded, defaultCity]);
 
   if (!isLoaded) {
     return (
@@ -24,12 +33,18 @@ function App() {
 
   return (
     <div className="h-full flex flex-col bg-gray-50">
-      <Header />
+      <Header onChangeCityClick={() => setShowCityPicker(true)} />
       <main className="flex-1 flex flex-col overflow-hidden">
         {activeTab === 'map' && <MapView />}
         {activeTab === 'toVisit' && <RestaurantList listType="toVisit" />}
         {activeTab === 'favorites' && <RestaurantList listType="favorite" />}
       </main>
+      {showCityPicker && (
+        <CityPickerModal
+          title={defaultCity ? 'Change your home city' : 'Where are you based?'}
+          onDone={() => setShowCityPicker(false)}
+        />
+      )}
     </div>
   );
 }

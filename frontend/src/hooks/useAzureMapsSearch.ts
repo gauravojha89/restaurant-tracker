@@ -161,3 +161,30 @@ export async function reverseGeocode(
     return null;
   }
 }
+
+export async function geocodeCity(
+  city: string
+): Promise<{ latitude: number; longitude: number; label: string } | null> {
+  if (!AZURE_MAPS_KEY) return null;
+  try {
+    const params = new URLSearchParams({
+      'api-version': '1.0',
+      query: city,
+      entityType: 'Municipality',
+      'subscription-key': AZURE_MAPS_KEY,
+    });
+    const res = await fetch(`https://atlas.microsoft.com/search/address/json?${params}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const r = data.results?.[0];
+    if (!r) return null;
+    const label =
+      r.address?.municipality ??
+      r.address?.localName ??
+      r.address?.freeformAddress ??
+      city;
+    return { latitude: r.position.lat, longitude: r.position.lon, label };
+  } catch {
+    return null;
+  }
+}
