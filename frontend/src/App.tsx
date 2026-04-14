@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="h-full flex flex-col bg-gray-50">
       <Header onChangeCityClick={() => setShowCityPicker(true)} />
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-auto min-h-0">
         {activeTab === 'map' && <MapView />}
         {activeTab === 'toVisit' && <RestaurantList listType="toVisit" />}
         {activeTab === 'favorites' && <RestaurantList listType="favorite" />}

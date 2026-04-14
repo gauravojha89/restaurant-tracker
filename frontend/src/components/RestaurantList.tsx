@@ -36,13 +36,13 @@ export function RestaurantList({ listType }: RestaurantListProps) {
   const restaurants = useFilteredRestaurants(listType);
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50">
+    <div className="flex-1 flex flex-col bg-gray-50 min-h-0">
       <FilterBar />
 
       {restaurants.length === 0 ? (
         <EmptyState listType={listType} />
       ) : (
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 pb-8">
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center justify-between px-1 mb-3">
               <span className="text-sm text-gray-500">
