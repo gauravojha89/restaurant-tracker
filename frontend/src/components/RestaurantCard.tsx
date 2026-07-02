@@ -161,6 +161,22 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   </div>
                 </div>
                 <div className="mb-2">
+                  <p className="text-xs font-medium text-gray-400 mb-1">Drinks</p>
+                  <div className="flex flex-wrap gap-1">
+                    {CATEGORIES.filter(c => c.group === 'drinks').map((cat) => {
+                      const active = editedCategories.includes(cat.value);
+                      return (
+                        <button key={cat.value}
+                          onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
+                          className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                          {cat.emoji} {cat.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="mb-2">
                   <p className="text-xs font-medium text-gray-400 mb-1">Occasion</p>
                   <div className="flex flex-wrap gap-1">
                     {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {

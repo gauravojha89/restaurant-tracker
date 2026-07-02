@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Allowlisted identities — GitHub usernames or Microsoft emails
-const ALLOWED_USERS = ['gauravojha89', 'poojapandey90', 'gauravojha@hotmail.com', 'saloni-jain'];
+const ALLOWED_USERS = ['gauravojha89', 'poojapandey90', 'gauravojha@hotmail.com', 'saloni-jain', 'Mrskanadian@outlook.com'];
 
 interface AuthUser {
   userDetails: string; // GitHub username
