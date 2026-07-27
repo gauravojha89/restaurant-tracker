@@ -81,7 +81,7 @@ export function FilterBar() {
   };
 
   return (
-    <div ref={containerRef} className="bg-gray-50 border-b border-gray-100 px-3 py-2.5">
+    <div ref={containerRef} className="bg-slate-200/70 border-b border-slate-300/70 px-3 py-2.5">
       <div className="flex items-center gap-1.5 px-1 mb-2">
         <SlidersHorizontal className="w-3.5 h-3.5 text-gray-400" />
         <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Filters</span>

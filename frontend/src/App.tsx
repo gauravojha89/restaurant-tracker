@@ -32,8 +32,8 @@ function App() {
   }
 
   return (
-    <div className="h-full bg-gradient-to-b from-gray-100 via-gray-50 to-white p-2 sm:p-4">
-      <div className="h-full max-w-5xl mx-auto rounded-[28px] border border-gray-200/90 bg-white/90 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backdrop-blur-sm overflow-hidden flex flex-col">
+    <div className="h-full bg-gradient-to-b from-slate-300 via-slate-200 to-slate-100 p-2 sm:p-4">
+      <div className="h-full max-w-5xl mx-auto rounded-[28px] border border-slate-300/90 bg-slate-50/92 shadow-[0_22px_56px_rgba(15,23,42,0.16)] backdrop-blur-sm overflow-hidden flex flex-col">
         <Header />
         <main className="flex-1 flex flex-col overflow-auto min-h-0">
           {activeTab === 'map' && <MapView onChangeCityClick={() => setShowCityPicker(true)} />}
