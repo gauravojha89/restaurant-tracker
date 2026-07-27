@@ -100,31 +100,32 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-[18px] bg-[#fffdf8] border border-[#ece9df] shadow-[0_8px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]"
+        className="group/card rounded-[18px] bg-[#f7f3ea] border border-[#e8e2d5] shadow-[0_10px_24px_rgba(15,23,42,0.10)] transition-all duration-200 hover:shadow-[0_16px_32px_rgba(15,23,42,0.14)]"
       >
         <div className="p-2 pb-0">
           <div
-            className="h-14 rounded-[12px] border border-white/70 shadow-inner overflow-hidden"
+            className="relative h-16 rounded-[13px] border-[5px] border-[#fbfaf6] overflow-hidden rotate-[-0.35deg] shadow-[0_10px_18px_rgba(0,0,0,0.12)]"
             style={{
-              background: `linear-gradient(135deg, ${photoColor}25 0%, ${photoColor}12 60%, #ffffff 100%)`,
+              background: `linear-gradient(138deg, ${photoColor}30 0%, ${photoColor}14 58%, #fff9ef 100%)`,
             }}
           >
             <div
               className="h-full w-full"
               style={{
-                backgroundImage: `radial-gradient(${photoColor}30 1px, transparent 1px)`,
-                backgroundSize: '12px 12px',
+                backgroundImage: `radial-gradient(${photoColor}26 1px, transparent 1px)`,
+                backgroundSize: '13px 13px',
               }}
             />
+            <div className="absolute -right-2 -top-2 h-5 w-5 rotate-45 rounded-[3px] border border-[#efe7d9] bg-[#fffaf1] shadow-[0_3px_6px_rgba(0,0,0,0.12)]" />
           </div>
         </div>
 
         <div
-          className="mx-2 mt-2 rounded-[10px] px-2.5 py-1.5"
-          style={{ backgroundColor: `${photoColor}22` }}
+          className="mx-2 mt-2 rounded-[10px] px-2.5 py-1.5 border border-white/60 shadow-[0_2px_6px_rgba(0,0,0,0.05)]"
+          style={{ background: `linear-gradient(180deg, ${photoColor}24 0%, ${photoColor}18 100%)` }}
         >
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-[12px] font-semibold text-gray-900 leading-tight truncate">
+            <h3 className="text-[12px] font-semibold text-gray-900 leading-tight truncate tracking-[0.01em]">
               {restaurant.name}
             </h3>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold whitespace-nowrap bg-white/70 text-gray-700">
