@@ -19,25 +19,25 @@ export function Header({ onChangeCityClick }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-primary-100/70 bg-white/90 backdrop-blur-xl">
       <div className="max-w-4xl mx-auto px-4 pt-3 pb-3">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex-1 pr-3 min-w-0">
-            <div className="relative overflow-hidden rounded-2xl border border-primary-100/80 bg-gradient-to-r from-primary-50 via-sky-50 to-cyan-50 px-3 py-2.5 shadow-sm">
-              <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-primary-200/30" />
-              <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-cyan-200/30" />
-              <div className="relative flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-primary-500 to-cyan-400 text-white flex items-center justify-center text-base shadow-sm">
-                  🍽️
-                </div>
-                <div className="min-w-0">
-                  <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-primary-900 leading-none truncate">
-                    WishBite
-                  </h1>
-                  <p className="text-[11px] text-primary-700/80 mt-0.5 truncate">Your personal food list</p>
-                </div>
+        <div className="mb-2.5">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-700/70 bg-gradient-to-r from-slate-900 via-slate-800 to-cyan-900 px-3 py-2.5 shadow-md">
+            <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-cyan-300/20" />
+            <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-primary-300/20" />
+            <div className="relative flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-cyan-300 to-primary-300 text-slate-900 flex items-center justify-center text-base shadow-sm">
+                🍽️
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-white leading-none truncate">
+                  WishBite
+                </h1>
+                <p className="text-[11px] text-cyan-100/90 mt-0.5 truncate">Your personal food list</p>
               </div>
             </div>
           </div>
+        </div>
 
+        <div className="flex items-center justify-end gap-2 mb-3">
           <div className="flex items-center gap-2">
             <button
               onClick={onChangeCityClick}
