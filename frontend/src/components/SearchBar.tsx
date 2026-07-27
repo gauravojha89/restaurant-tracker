@@ -108,7 +108,7 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => results.length > 0 && setIsOpen(true)}
-          placeholder="Search restaurants, cafes, bars..."
+          placeholder="Search on Explore page"
           className="w-full pl-10 pr-10 py-3 glass-pill border-white/70 rounded-xl
                      text-slate-100 placeholder-slate-400
                      focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import * as atlas from 'azure-maps-control';
 import 'azure-maps-control/dist/atlas.min.css';
-import { Plus, Heart, MapPin, LogOut } from 'lucide-react';
+import { Plus, Heart, MapPin } from 'lucide-react';
 import { useStore } from '../store';
 import { CATEGORIES, type Category, type SavedRestaurant } from '../types';
 import { SearchBar } from './SearchBar';
@@ -341,13 +341,6 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
             <MapPin className="w-3.5 h-3.5 text-primary-500" />
             <span className="max-w-24 truncate">{defaultCity ?? 'Set home'}</span>
           </button>
-          <a
-            href="/.auth/logout?post_logout_redirect_uri=/"
-            className="p-2.5 text-slate-300 hover:text-slate-100 hover:bg-white/10 border border-white/25 glass-pill rounded-full transition-colors"
-            title="Sign out"
-          >
-            <LogOut className="w-4 h-4" />
-          </a>
         </div>
       </div>
 
