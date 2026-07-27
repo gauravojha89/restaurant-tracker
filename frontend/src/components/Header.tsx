@@ -12,6 +12,32 @@ export function Header() {
     { id: 'map' as const, label: 'Explore', icon: Map, count: null },
   ];
 
+  const tabColors: Record<(typeof tabs)[number]['id'], {
+    active: string;
+    inactive: string;
+    badgeActive: string;
+    badgeInactive: string;
+  }> = {
+    toVisit: {
+      active: 'bg-sky-100 text-sky-800 shadow-sm',
+      inactive: 'text-sky-700/80 bg-sky-50/60 hover:bg-sky-100/80',
+      badgeActive: 'bg-sky-200 text-sky-800',
+      badgeInactive: 'bg-sky-100 text-sky-700',
+    },
+    favorites: {
+      active: 'bg-rose-100 text-rose-800 shadow-sm',
+      inactive: 'text-rose-700/80 bg-rose-50/60 hover:bg-rose-100/80',
+      badgeActive: 'bg-rose-200 text-rose-800',
+      badgeInactive: 'bg-rose-100 text-rose-700',
+    },
+    map: {
+      active: 'bg-emerald-100 text-emerald-800 shadow-sm',
+      inactive: 'text-emerald-700/80 bg-emerald-50/60 hover:bg-emerald-100/80',
+      badgeActive: 'bg-emerald-200 text-emerald-800',
+      badgeInactive: 'bg-emerald-100 text-emerald-700',
+    },
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-primary-100/70 bg-white/90 backdrop-blur-xl">
       <div className="max-w-4xl mx-auto px-4 pt-3 pb-3">
@@ -36,6 +62,7 @@ export function Header() {
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
+              const colors = tabColors[tab.id];
 
               return (
                 <button
@@ -44,11 +71,7 @@ export function Header() {
                   className={`
                     flex items-center justify-center gap-1.5 px-2 py-2 rounded-xl text-xs sm:text-sm font-medium
                     transition-all duration-200 ease-in-out
-                    ${
-                      isActive
-                        ? 'bg-white text-primary-700 shadow-sm'
-                        : 'text-gray-600 hover:bg-white/70 hover:text-gray-900'
-                    }
+                    ${isActive ? colors.active : colors.inactive}
                   `}
                 >
                   <Icon className="w-4 h-4" />
@@ -57,11 +80,7 @@ export function Header() {
                     <span
                       className={`
                         text-xs px-1.5 py-0.5 rounded-full font-medium
-                        ${
-                          isActive
-                            ? 'bg-primary-200 text-primary-800'
-                            : 'bg-gray-200 text-gray-700'
-                        }
+                        ${isActive ? colors.badgeActive : colors.badgeInactive}
                       `}
                     >
                       {tab.count}
