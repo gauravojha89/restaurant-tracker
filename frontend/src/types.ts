@@ -36,14 +36,15 @@ export interface SearchFilters {
   city: string;
 }
 
-export const CATEGORIES: { value: Category; label: string; emoji: string; color: string; group: 'meal' | 'occasion' | 'drinks' }[] = [
+export const CATEGORIES: { value: Category; label: string; emoji: string; color: string; group: 'meal' | 'sweets' | 'occasion' | 'drinks' }[] = [
   // — Meal types —
   { value: 'breakfast', label: 'Breakfast', emoji: '🍳', color: '#f59e0b', group: 'meal' },
   { value: 'brunch', label: 'Brunch', emoji: '🥂', color: '#ec4899', group: 'meal' },
   { value: 'lunch', label: 'Lunch', emoji: '🥗', color: '#22c55e', group: 'meal' },
   { value: 'dinner', label: 'Dinner', emoji: '🍽️', color: '#8b5cf6', group: 'meal' },
-  { value: 'desserts', label: 'Desserts', emoji: '🍰', color: '#f472b6', group: 'meal' },
-  { value: 'ice-cream', label: 'Ice Cream', emoji: '🍨', color: '#60a5fa', group: 'meal' },
+  // — Sweets —
+  { value: 'desserts', label: 'Desserts', emoji: '🍰', color: '#f472b6', group: 'sweets' },
+  { value: 'ice-cream', label: 'Ice Cream', emoji: '🍨', color: '#60a5fa', group: 'sweets' },
   // — Drinks —
   { value: 'coffee', label: 'Coffee', emoji: '☕', color: '#78716c', group: 'drinks' },
   { value: 'bar', label: 'Bar', emoji: '🍹', color: '#d97706', group: 'drinks' },

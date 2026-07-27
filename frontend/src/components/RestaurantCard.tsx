@@ -105,7 +105,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           const emoji = primary?.emoji ?? '🍽️';
           return (
             <div
-              className="relative h-28 flex items-center justify-center overflow-hidden"
+              className="relative h-20 flex items-center justify-center overflow-hidden"
               style={{ background: `linear-gradient(135deg, ${color}2E 0%, ${color}12 100%)` }}
             >
               {/* dot grid */}
@@ -113,10 +113,10 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 backgroundImage: `radial-gradient(${color}24 1.25px, transparent 1.25px)`,
                 backgroundSize: '16px 16px',
               }} />
-              <span className="relative text-5xl drop-shadow-sm select-none">{emoji}</span>
+              <span className="relative text-4xl drop-shadow-sm select-none">{emoji}</span>
               {restaurant.listType === 'favorite' && (
-                <div className="absolute top-3 right-3 bg-white/90 rounded-full p-1.5 shadow-sm">
-                  <Heart className="w-3.5 h-3.5 text-red-500 fill-current" />
+                <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
+                  <Heart className="w-3 h-3 text-red-500 fill-current" />
                 </div>
               )}
             </div>
@@ -124,23 +124,23 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         })()}
 
         {/* Info */}
-        <div className="p-4">
-          <h3 className="text-base font-bold text-gray-900 leading-tight mb-0.5 truncate">
+        <div className="p-3">
+          <h3 className="text-sm font-bold text-gray-900 leading-tight mb-0.5 truncate">
             {restaurant.name}
           </h3>
-          <p className="text-xs text-gray-400 flex items-center gap-0.5 truncate mb-2">
+          <p className="text-[11px] text-gray-400 flex items-center gap-0.5 truncate mb-1.5">
             <MapPin className="w-3 h-3 flex-shrink-0" />
             {restaurant.address}
           </p>
           {homeDistance && (
-            <p className="text-xs text-gray-500 mb-2">{homeDistance} from home</p>
+            <p className="text-[11px] text-gray-500 mb-1.5">{homeDistance} from home</p>
           )}
 
           {/* Stars */}
           {restaurant.listType === 'favorite' && restaurant.personalRating && (
-            <div className="flex items-center gap-0.5 mb-2">
+            <div className="flex items-center gap-0.5 mb-1.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`w-3.5 h-3.5 ${
+                <Star key={i} className={`w-3 h-3 ${
                   i < restaurant.personalRating! ? 'text-yellow-400 fill-current' : 'text-gray-200'
                 }`} />
               ))}
@@ -148,10 +148,10 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           )}
 
           {/* Categories */}
-          <div className="mb-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2">
+          <div className="mb-2 rounded-xl border border-gray-100 bg-gray-50 px-2.5 py-1.5">
             {!isEditingCategories ? (
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs text-gray-500 truncate">
+                <p className="text-[11px] text-gray-500 truncate">
                   {restaurant.categories.length > 0
                     ? restaurant.categories
                         .map((cat) => getCategoryInfo(cat)?.label ?? cat)
@@ -163,7 +163,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     setEditedCategories(restaurant.categories);
                     setIsEditingCategories(true);
                   }}
-                  className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+                  className="flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
                 >
                   <Edit2 className="w-3 h-3" />
                   Edit
@@ -175,6 +175,22 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   <p className="text-xs font-medium text-gray-400 mb-1">Meal Type</p>
                   <div className="flex flex-wrap gap-1">
                     {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
+                      const active = editedCategories.includes(cat.value);
+                      return (
+                        <button key={cat.value}
+                          onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
+                          className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
+                          style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                          {cat.emoji} {cat.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="mb-2">
+                  <p className="text-xs font-medium text-gray-400 mb-1">Sweets</p>
+                  <div className="flex flex-wrap gap-1">
+                    {CATEGORIES.filter(c => c.group === 'sweets').map((cat) => {
                       const active = editedCategories.includes(cat.value);
                       return (
                         <button key={cat.value}
@@ -229,7 +245,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
           {/* Notes */}
           {(restaurant.personalNotes || isEditingNotes) && (
-            <div className="mb-3 pt-2 border-t border-gray-100">
+            <div className="mb-2 pt-2 border-t border-gray-100">
               {isEditingNotes ? (
                 <div>
                   <textarea value={notes} onChange={e => setNotes(e.target.value)}
@@ -243,7 +259,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 </div>
               ) : (
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-xs text-gray-500 italic">"{restaurant.personalNotes}"</p>
+                  <p className="text-[11px] text-gray-500 italic">"{restaurant.personalNotes}"</p>
                   <button onClick={() => setIsEditingNotes(true)} className="p-1 text-gray-400 flex-shrink-0"><Edit2 className="w-3 h-3" /></button>
                 </div>
               )}
@@ -257,21 +273,21 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           )}
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+          <div className="flex items-center justify-between pt-1.5 border-t border-gray-100">
             <div className="flex items-center gap-1">
               <button onClick={handleViewOnMap}
-                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
+                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
                 <MapPin className="w-3.5 h-3.5" /> View
               </button>
               <button onClick={openInMaps}
-                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
+                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
                 <ExternalLink className="w-3.5 h-3.5" /> Maps
               </button>
             </div>
             <div className="flex items-center gap-1">
               {restaurant.listType === 'toVisit' && (
                 <button onClick={() => setShowMoveModal(true)}
-                  className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors">
+                  className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-red-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors">
                   <Heart className="w-3.5 h-3.5" /> Visited!
                 </button>
               )}
