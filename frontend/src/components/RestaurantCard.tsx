@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heart, MapPin, Star, Trash2, ExternalLink, Edit2, Check, X } from 'lucide-react';
+import { Heart, MapPin, Star, Trash2, ExternalLink, Edit2, Check, X, CheckCircle2 } from 'lucide-react';
 import type { SavedRestaurant, Category } from '../types';
 import { CATEGORIES } from '../types';
 import { useStore } from '../store';
@@ -94,40 +94,26 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md"
+        className="group/card rounded-2xl bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md"
       >
-        {/* Cover */}
-        {(() => {
-          const primary = restaurant.categories.length > 0
-            ? CATEGORIES.find(c => c.value === restaurant.categories[0])
-            : null;
-          const color = primary?.color ?? '#94a3b8';
-          const emoji = restaurant.listType === 'favorite' ? '💖' : '📍';
-          return (
-            <div
-              className="relative h-16 flex items-center justify-center overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${color}2E 0%, ${color}12 100%)` }}
-            >
-              {/* dot grid */}
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(${color}24 1.25px, transparent 1.25px)`,
-                backgroundSize: '16px 16px',
-              }} />
-              <span className="relative text-3xl drop-shadow-sm select-none">{emoji}</span>
-              {restaurant.listType === 'favorite' && (
-                <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
-                  <Heart className="w-3 h-3 text-red-500 fill-current" />
-                </div>
-              )}
-            </div>
-          );
-        })()}
+        <div className={`h-1.5 rounded-t-2xl ${restaurant.listType === 'favorite' ? 'bg-rose-300' : 'bg-sky-300'}`} />
 
         {/* Info */}
         <div className="p-2.5">
-          <h3 className="text-sm font-bold text-gray-900 leading-tight mb-0.5 truncate">
-            {restaurant.name}
-          </h3>
+          <div className="flex items-start justify-between gap-2 mb-0.5">
+            <h3 className="text-sm font-bold text-gray-900 leading-tight truncate">
+              {restaurant.name}
+            </h3>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold whitespace-nowrap ${
+                restaurant.listType === 'favorite'
+                  ? 'bg-rose-100 text-rose-700'
+                  : 'bg-sky-100 text-sky-700'
+              }`}
+            >
+              {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}
+            </span>
+          </div>
           <p className="text-[11px] text-gray-400 flex items-center gap-0.5 truncate mb-1.5">
             <MapPin className="w-3 h-3 flex-shrink-0" />
             {restaurant.address}
@@ -260,28 +246,33 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   setEditedCategories(restaurant.categories);
                   setIsEditingCategories(true);
                 }}
-                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+                className="p-1.5 text-gray-500 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+                title="Edit categories"
               >
-                <Edit2 className="w-3.5 h-3.5" /> Edit
+                <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button onClick={handleViewOnMap}
-                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
-                <MapPin className="w-3.5 h-3.5" /> View
+                className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                title="View on map">
+                <MapPin className="w-3.5 h-3.5" />
               </button>
               <button onClick={openInMaps}
-                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
-                <ExternalLink className="w-3.5 h-3.5" /> Maps
+                className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                title="Open in Google Maps">
+                <ExternalLink className="w-3.5 h-3.5" />
               </button>
             </div>
             <div className="flex items-center gap-1">
               {restaurant.listType === 'toVisit' && (
                 <button onClick={() => setShowMoveModal(true)}
-                  className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-red-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors">
-                  <Heart className="w-3.5 h-3.5" /> Visited!
+                  className="p-1.5 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors"
+                  title="Mark as visited">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                 </button>
               )}
               <button onClick={() => setShowDeleteConfirm(true)}
-                className="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors">
+                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                title="Remove">
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
             </div>

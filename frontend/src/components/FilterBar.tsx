@@ -87,17 +87,17 @@ export function FilterBar() {
         <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Filters</span>
       </div>
 
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      <div className="flex items-center gap-1.5 pb-1">
         <div className="relative flex-shrink-0">
           <button
             onClick={() => setOpenMenu(openMenu === 'city' ? null : 'city')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
               filters.city
                 ? 'bg-primary-500 text-white border-primary-500'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            📍 {filters.city || 'All Cities'}
+            📍 <span className="max-w-16 sm:max-w-24 truncate">{filters.city || 'All Cities'}</span>
             <ChevronDown className="w-3.5 h-3.5" />
           </button>
 
@@ -142,7 +142,7 @@ export function FilterBar() {
         {hasFilters && (
           <button
             onClick={clearFilters}
-            className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-gray-500 border border-gray-200 bg-white hover:bg-gray-50"
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium text-gray-500 border border-gray-200 bg-white hover:bg-gray-50"
           >
             <X className="w-3 h-3" /> Clear
           </button>
