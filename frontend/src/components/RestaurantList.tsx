@@ -49,10 +49,13 @@ export function RestaurantList({ listType }: RestaurantListProps) {
                 {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
               </span>
             </div>
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-3">
+            <div className="relative pl-8 sm:pl-10">
+              <div className="absolute left-2 sm:left-3 top-1 bottom-1 w-3 rounded-full bg-gradient-to-b from-[#b98f64] via-[#9f754e] to-[#7f5a3d] shadow-[inset_-2px_0_3px_rgba(0,0,0,0.18)]" />
+              <div className="space-y-3">
               {restaurants.map((restaurant) => (
                 <RestaurantCard key={restaurant.id} restaurant={restaurant} />
               ))}
+              </div>
             </div>
           </div>
         </div>
