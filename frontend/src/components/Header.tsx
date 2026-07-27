@@ -1,12 +1,8 @@
-import { Map, Heart, MapPin, LogOut } from 'lucide-react';
+import { Map, Heart, MapPin } from 'lucide-react';
 import { useStore, useToVisitList, useFavoritesList } from '../store';
 
-interface HeaderProps {
-  onChangeCityClick: () => void;
-}
-
-export function Header({ onChangeCityClick }: HeaderProps) {
-  const { activeTab, setActiveTab, defaultCity } = useStore();
+export function Header() {
+  const { activeTab, setActiveTab } = useStore();
   const toVisitList = useToVisitList();
   const favoritesList = useFavoritesList();
 
@@ -36,28 +32,6 @@ export function Header({ onChangeCityClick }: HeaderProps) {
             </div>
           </div>
         </div>
-
-        <div className="flex items-center justify-end gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onChangeCityClick}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-full transition-colors"
-              title="Change default city"
-            >
-              <MapPin className="w-3.5 h-3.5 text-primary-500" />
-              <span className="max-w-24 truncate">{defaultCity ?? 'Set city'}</span>
-            </button>
-
-            <a
-              href="/.auth/logout?post_logout_redirect_uri=/"
-              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors"
-              title="Sign out"
-            >
-              <LogOut className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-
         <nav className="grid grid-cols-3 rounded-2xl bg-gray-100/90 p-1 gap-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import * as atlas from 'azure-maps-control';
 import 'azure-maps-control/dist/atlas.min.css';
-import { Plus, Heart, MapPin } from 'lucide-react';
+import { Plus, Heart, MapPin, LogOut } from 'lucide-react';
 import { useStore } from '../store';
 import { CATEGORIES, type Category, type SavedRestaurant } from '../types';
 import { SearchBar } from './SearchBar';
@@ -82,7 +82,11 @@ function restaurantPopupHtml(r: SavedRestaurant): string {
 // ─────────────────────────────────────────────
 // Map component
 // ─────────────────────────────────────────────
-export function MapView() {
+interface MapViewProps {
+  onChangeCityClick: () => void;
+}
+
+export function MapView({ onChangeCityClick }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<atlas.Map | null>(null);
   const popupRef = useRef<atlas.Popup | null>(null);
@@ -92,7 +96,7 @@ export function MapView() {
   const lastSyncedView = useRef({ longitude: 0, latitude: 0, zoom: 0 });
   const markerClickedRef = useRef(false); // prevent map-click from firing after marker click
 
-  const { mapView, setMapView, addToList, savedRestaurants, homeCoordinates } = useStore();
+  const { mapView, setMapView, addToList, savedRestaurants, homeCoordinates, defaultCity } = useStore();
 
   const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -325,7 +329,26 @@ export function MapView() {
     <div className="flex-1 flex flex-col">
       {/* Search bar */}
       <div className="p-4 bg-white border-b border-gray-200">
-        <SearchBar onSelectResult={handleSearchSelect} />
+        <div className="flex items-center gap-2.5">
+          <div className="flex-1 min-w-0">
+            <SearchBar onSelectResult={handleSearchSelect} />
+          </div>
+          <button
+            onClick={onChangeCityClick}
+            className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-full transition-colors"
+            title="Change home address"
+          >
+            <MapPin className="w-3.5 h-3.5 text-primary-500" />
+            <span className="max-w-24 truncate">{defaultCity ?? 'Set home'}</span>
+          </button>
+          <a
+            href="/.auth/logout?post_logout_redirect_uri=/"
+            className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors"
+            title="Sign out"
+          >
+            <LogOut className="w-4 h-4" />
+          </a>
+        </div>
       </div>
 
       {/* Map container — capped height on desktop, flex on mobile */}
