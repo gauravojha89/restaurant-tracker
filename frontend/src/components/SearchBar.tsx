@@ -100,7 +100,7 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
   return (
     <div className="relative w-full max-w-xl">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
         <input
           ref={inputRef}
           type="text"
@@ -110,12 +110,12 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
           onFocus={() => results.length > 0 && setIsOpen(true)}
           placeholder="Search restaurants, cafes, bars..."
           className="w-full pl-10 pr-10 py-3 glass-pill border-white/70 rounded-xl
-                     text-gray-900 placeholder-slate-500
+                     text-slate-100 placeholder-slate-400
                      focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
                      transition-shadow"
         />
         {isLoading && (
-          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 animate-spin" />
+          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 animate-spin" />
         )}
         {!isLoading && query && (
           <button
@@ -124,7 +124,7 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
               setResults([]);
               setIsOpen(false);
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-500 hover:text-slate-700"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-300 hover:text-slate-100"
           >
             <X className="w-4 h-4" />
           </button>
@@ -142,17 +142,17 @@ export function SearchBar({ onSelectResult }: SearchBarProps) {
               <button
                 key={result.id}
                 onClick={() => handleSelectResult(result)}
-                className={`w-full px-4 py-3 text-left hover:bg-white/55 transition-colors
+                className={`w-full px-4 py-3 text-left hover:bg-white/10 transition-colors
                            flex items-start gap-3 ${
-                             selectedIndex === index ? 'bg-primary-50/85' : ''
+                             selectedIndex === index ? 'bg-primary-500/30' : ''
                            }`}
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100/85 border border-white/70 flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-500/25 border border-white/25 flex items-center justify-center">
                   <span className="text-sm">📍</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 truncate">{result.name}</p>
-                  <p className="text-sm text-gray-500 truncate">{result.address}</p>
+                  <p className="font-medium text-slate-100 truncate">{result.name}</p>
+                  <p className="text-sm text-slate-300 truncate">{result.address}</p>
                 </div>
               </button>
             ))}

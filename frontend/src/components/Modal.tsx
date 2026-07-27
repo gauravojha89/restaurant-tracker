@@ -48,10 +48,10 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       >
         {title && (
           <div className="flex items-center justify-between px-6 py-4 border-b glass-divider">
-            <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+            <h2 className="text-lg font-semibold text-slate-100">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 -m-2 text-gray-400 hover:text-gray-700 hover:bg-white/60 rounded-lg transition-colors"
+              className="p-2 -m-2 text-slate-400 hover:text-slate-100 hover:bg-white/10 rounded-lg transition-colors"
             >
               <X className="w-5 h-5" />
             </button>

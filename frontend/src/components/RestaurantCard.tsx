@@ -60,11 +60,11 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
   if (compact) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
+      <div className="glass-surface rounded-xl p-4 hover:shadow-md transition-shadow">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-medium text-gray-900 truncate">{restaurant.name}</h3>
-            <p className="text-sm text-gray-500 truncate">{restaurant.city}</p>
+            <h3 className="font-medium text-slate-100 truncate">{restaurant.name}</h3>
+            <p className="text-sm text-slate-300 truncate">{restaurant.city}</p>
             <div className="flex flex-wrap gap-1 mt-2">
               {restaurant.categories.map((cat) => {
                 const info = getCategoryInfo(cat);
@@ -82,7 +82,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           </div>
           <button
             onClick={handleViewOnMap}
-            className="p-2 text-gray-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors"
+            className="p-2 text-slate-400 hover:text-primary-300 hover:bg-white/10 rounded-lg transition-colors"
             title="View on map"
           >
             <MapPin className="w-5 h-5" />
@@ -99,12 +99,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
       >
         <button
           onClick={() => setIsExpanded((prev) => !prev)}
-          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-white/40"
+          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-white/10"
           aria-expanded={isExpanded}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-[15px] font-semibold text-gray-900 leading-tight truncate tracking-[-0.01em]">
+              <h3 className="text-[15px] font-semibold text-slate-100 leading-tight truncate tracking-[-0.01em]">
                 {restaurant.name}
               </h3>
             </div>
@@ -119,12 +119,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         >
           <div className="border-t glass-divider px-4 pb-3.5 pt-2.5">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-slate-500">
+              <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-slate-400">
                 {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}
               </span>
-              {homeDistance && <span className="text-[11px] text-slate-600">{homeDistance} from home</span>}
+              {homeDistance && <span className="text-[11px] text-slate-300">{homeDistance} from home</span>}
             </div>
-            <p className="text-[10px] text-gray-400 flex items-center gap-0.5 truncate mb-1">
+            <p className="text-[10px] text-slate-400 flex items-center gap-0.5 truncate mb-1">
               <MapPin className="w-3 h-3 flex-shrink-0" />
               {restaurant.address}
             </p>
@@ -141,10 +141,10 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
             {/* Categories editor (hidden until edit) */}
             {isEditingCategories && (
-              <div className="mb-2 rounded-xl border border-gray-100 bg-gray-50 px-2.5 py-1.5">
+              <div className="mb-2 rounded-xl border border-white/20 bg-slate-900/55 px-2.5 py-1.5">
                 <div>
                   <div className="mb-2">
-                    <p className="text-xs font-medium text-gray-400 mb-1">Meal Type</p>
+                    <p className="text-xs font-medium text-slate-400 mb-1">Meal Type</p>
                     <div className="flex flex-wrap gap-1">
                       {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
                         const active = editedCategories.includes(cat.value);
@@ -152,7 +152,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                           <button key={cat.value}
                             onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
                             className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
-                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#475569', color: '#cbd5e1' }}>
                             {cat.emoji} {cat.label}
                           </button>
                         );
@@ -160,7 +160,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     </div>
                   </div>
                   <div className="mb-2">
-                    <p className="text-xs font-medium text-gray-400 mb-1">Sweets</p>
+                    <p className="text-xs font-medium text-slate-400 mb-1">Sweets</p>
                     <div className="flex flex-wrap gap-1">
                       {CATEGORIES.filter(c => c.group === 'sweets').map((cat) => {
                         const active = editedCategories.includes(cat.value);
@@ -168,7 +168,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                           <button key={cat.value}
                             onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
                             className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
-                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#475569', color: '#cbd5e1' }}>
                             {cat.emoji} {cat.label}
                           </button>
                         );
@@ -176,7 +176,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     </div>
                   </div>
                   <div className="mb-2">
-                    <p className="text-xs font-medium text-gray-400 mb-1">Drinks</p>
+                    <p className="text-xs font-medium text-slate-400 mb-1">Drinks</p>
                     <div className="flex flex-wrap gap-1">
                       {CATEGORIES.filter(c => c.group === 'drinks').map((cat) => {
                         const active = editedCategories.includes(cat.value);
@@ -184,7 +184,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                           <button key={cat.value}
                             onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
                             className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
-                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#475569', color: '#cbd5e1' }}>
                             {cat.emoji} {cat.label}
                           </button>
                         );
@@ -192,7 +192,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     </div>
                   </div>
                   <div className="mb-2">
-                    <p className="text-xs font-medium text-gray-400 mb-1">Occasion</p>
+                    <p className="text-xs font-medium text-slate-400 mb-1">Occasion</p>
                     <div className="flex flex-wrap gap-1">
                       {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
                         const active = editedCategories.includes(cat.value);
@@ -200,7 +200,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                           <button key={cat.value}
                             onClick={() => setEditedCategories(prev => active ? prev.filter(c => c !== cat.value) : [...prev, cat.value])}
                             className="text-xs font-medium px-2 py-0.5 rounded-full border transition-all"
-                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#e5e7eb', color: '#6b7280' }}>
+                            style={active ? { backgroundColor: `${cat.color}20`, color: cat.color, borderColor: cat.color } : { borderColor: '#475569', color: '#cbd5e1' }}>
                             {cat.emoji} {cat.label}
                           </button>
                         );
@@ -208,7 +208,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                     </div>
                   </div>
                   <div className="flex justify-end gap-2 mt-1">
-                    <button onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(false); }} className="p-1.5 text-gray-400 hover:text-gray-600"><X className="w-4 h-4" /></button>
+                    <button onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(false); }} className="p-1.5 text-slate-400 hover:text-slate-200"><X className="w-4 h-4" /></button>
                     <button onClick={() => { updateCategories(restaurant.id, editedCategories); setIsEditingCategories(false); }} className="p-1.5 text-primary-500 hover:text-primary-600"><Check className="w-4 h-4" /></button>
                   </div>
                 </div>
@@ -217,53 +217,53 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
             {/* Notes */}
             {(restaurant.personalNotes || isEditingNotes) && (
-              <div className="mb-2 pt-2 border-t border-gray-100">
+              <div className="mb-2 pt-2 border-t glass-divider">
                 {isEditingNotes ? (
                   <div>
                     <textarea value={notes} onChange={e => setNotes(e.target.value)}
                       placeholder="Add your notes..."
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
+                      className="w-full px-3 py-2 border border-white/20 bg-slate-900/50 text-slate-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
                       rows={3} />
                     <div className="flex justify-end gap-2 mt-1">
-                      <button onClick={() => { setNotes(restaurant.personalNotes || ''); setIsEditingNotes(false); }} className="p-1.5 text-gray-400"><X className="w-4 h-4" /></button>
+                      <button onClick={() => { setNotes(restaurant.personalNotes || ''); setIsEditingNotes(false); }} className="p-1.5 text-slate-400"><X className="w-4 h-4" /></button>
                       <button onClick={handleSaveNotes} className="p-1.5 text-primary-500"><Check className="w-4 h-4" /></button>
                     </div>
                   </div>
                 ) : (
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-[11px] text-gray-500 italic">"{restaurant.personalNotes}"</p>
-                    <button onClick={() => setIsEditingNotes(true)} className="p-1 text-gray-400 flex-shrink-0"><Edit2 className="w-3 h-3" /></button>
+                    <p className="text-[11px] text-slate-300 italic">"{restaurant.personalNotes}"</p>
+                    <button onClick={() => setIsEditingNotes(true)} className="p-1 text-slate-400 flex-shrink-0"><Edit2 className="w-3 h-3" /></button>
                   </div>
                 )}
               </div>
             )}
             {!restaurant.personalNotes && !isEditingNotes && (
               <button onClick={() => setIsEditingNotes(true)}
-                className="mb-2 text-xs text-gray-300 hover:text-gray-500 flex items-center gap-1 opacity-0 group-hover/card:opacity-100 transition-opacity">
+                className="mb-2 text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1 opacity-0 group-hover/card:opacity-100 transition-opacity">
                 <Edit2 className="w-3 h-3" /> Add note
               </button>
             )}
 
             {/* Actions */}
-            <div className="flex items-center justify-between pt-1.5 border-t border-gray-100">
+            <div className="flex items-center justify-between pt-1.5 border-t glass-divider">
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => {
                     setEditedCategories(restaurant.categories);
                     setIsEditingCategories(true);
                   }}
-                  className="p-1.5 text-gray-500 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-primary-300 hover:bg-white/10 rounded-md transition-colors"
                   title="Edit categories"
                 >
                   <Edit2 className="w-3 h-3" />
                 </button>
                 <button onClick={handleViewOnMap}
-                  className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-slate-100 hover:bg-white/10 rounded-md transition-colors"
                   title="View on map">
                   <MapPin className="w-3 h-3" />
                 </button>
                 <button onClick={openInMaps}
-                  className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-slate-100 hover:bg-white/10 rounded-md transition-colors"
                   title="Open in Google Maps">
                   <ExternalLink className="w-3 h-3" />
                 </button>
@@ -271,13 +271,13 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
               <div className="flex items-center gap-1">
                 {restaurant.listType === 'toVisit' && (
                   <button onClick={() => setShowMoveModal(true)}
-                    className="p-1.5 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors"
+                    className="p-1.5 text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/20 rounded-md transition-colors"
                     title="Mark as visited">
                     <CheckCircle2 className="w-3 h-3" />
                   </button>
                 )}
                 <button onClick={() => setShowDeleteConfirm(true)}
-                  className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-red-300 hover:bg-red-500/20 rounded-md transition-colors"
                   title="Remove">
                   <Trash2 className="w-3 h-3" />
                 </button>
@@ -295,13 +295,13 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-600">
-            How was <span className="font-medium text-gray-900">{restaurant.name}</span>?
+          <p className="text-slate-300">
+            How was <span className="font-medium text-slate-100">{restaurant.name}</span>?
           </p>
 
           {/* Star Rating */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Your Rating</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">Your Rating</label>
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -321,12 +321,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Notes (optional)</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">Notes (optional)</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="What did you love about this place?"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm
+              className="w-full px-3 py-2 border border-white/20 bg-slate-900/50 text-slate-100 rounded-lg text-sm
                          focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
               rows={3}
             />
@@ -335,7 +335,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           <div className="flex justify-end gap-3 pt-2">
             <button
               onClick={() => setShowMoveModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+              className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-slate-100"
             >
               Cancel
             </button>
@@ -359,14 +359,14 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-600">
+          <p className="text-slate-300">
             Are you sure you want to remove{' '}
-            <span className="font-medium text-gray-900">{restaurant.name}</span> from your list?
+            <span className="font-medium text-slate-100">{restaurant.name}</span> from your list?
           </p>
           <div className="flex justify-end gap-3 pt-2">
             <button
               onClick={() => setShowDeleteConfirm(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+              className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-slate-100"
             >
               Cancel
             </button>

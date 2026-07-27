@@ -68,14 +68,14 @@ function restaurantPopupHtml(r: SavedRestaurant): string {
     : '';
 
   return `
-    <div style="padding:16px;min-width:220px;font-family:system-ui,sans-serif;box-sizing:border-box;">
+    <div style="padding:16px;min-width:220px;font-family:system-ui,sans-serif;box-sizing:border-box;background:linear-gradient(150deg, rgba(2,6,23,.94), rgba(15,23,42,.88));color:#e2e8f0;">
       <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;">
-        <strong style="font-size:15px;color:#111;flex:1;">${r.name}</strong>
+        <strong style="font-size:15px;color:#f8fafc;flex:1;">${r.name}</strong>
         ${r.listType === 'favorite' ? '<span style="flex-shrink:0;">❤️</span>' : ''}
       </div>
-      <p style="font-size:12px;color:#888;margin:0 0 10px;">📍 ${r.city}</p>
+      <p style="font-size:12px;color:#94a3b8;margin:0 0 10px;">📍 ${r.city}</p>
       <div style="display:flex;flex-wrap:wrap;gap:4px;">${chips}</div>
-      ${notes}
+      ${notes.replace('color:#555', 'color:#cbd5e1').replace('border-top:1px solid #eee;', 'border-top:1px solid rgba(148,163,184,.32);')}
     </div>`;
 }
 
@@ -317,9 +317,9 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
       <div className="flex-1 flex items-center justify-center bg-gray-100">
         <div className="text-center p-8 glass-surface rounded-2xl max-w-md">
           <div className="text-4xl mb-4">🗺️</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Azure Maps Key Needed</h2>
-          <p className="text-gray-600 mb-3">Add your Azure Maps key to the <code className="bg-gray-100 px-1 rounded">.env</code> file:</p>
-          <code className="block bg-gray-100 p-3 rounded-lg text-sm text-left">VITE_AZURE_MAPS_KEY=your_key_here</code>
+          <h2 className="text-xl font-semibold text-slate-100 mb-2">Azure Maps Key Needed</h2>
+          <p className="text-slate-300 mb-3">Add your Azure Maps key to the <code className="bg-slate-900/70 px-1 rounded">.env</code> file:</p>
+          <code className="block bg-slate-900/70 border border-white/20 p-3 rounded-lg text-sm text-left text-slate-200">VITE_AZURE_MAPS_KEY=your_key_here</code>
         </div>
       </div>
     );
@@ -335,7 +335,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
           </div>
           <button
             onClick={onChangeCityClick}
-            className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-slate-700 glass-pill border-white/70 hover:bg-white/65 rounded-full transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-slate-100 glass-pill border-white/25 hover:bg-white/10 rounded-full transition-colors"
             title="Change home address"
           >
             <MapPin className="w-3.5 h-3.5 text-primary-500" />
@@ -343,7 +343,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
           </button>
           <a
             href="/.auth/logout?post_logout_redirect_uri=/"
-            className="p-2.5 text-slate-500 hover:text-slate-700 hover:bg-white/65 border border-white/70 glass-pill rounded-full transition-colors"
+            className="p-2.5 text-slate-300 hover:text-slate-100 hover:bg-white/10 border border-white/25 glass-pill rounded-full transition-colors"
             title="Sign out"
           >
             <LogOut className="w-4 h-4" />
@@ -369,10 +369,10 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
             <div className="glass-surface rounded-2xl p-4 pointer-events-auto">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-gray-900 truncate">{selectedPlace.name}</h3>
-                  <p className="text-sm text-gray-500 truncate">{selectedPlace.address}</p>
+                  <h3 className="font-semibold text-slate-100 truncate">{selectedPlace.name}</h3>
+                  <p className="text-sm text-slate-300 truncate">{selectedPlace.address}</p>
                   {selectedPlaceDistance && (
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-slate-300 mt-1">
                       {selectedPlaceDistance} from home
                     </p>
                   )}
@@ -406,12 +406,12 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
         {selectedPlace && (
           <div className="space-y-5">
             <div>
-              <h3 className="font-semibold text-gray-900 text-lg">{selectedPlace.name}</h3>
-              <p className="text-gray-500 text-sm">{selectedPlace.address}</p>
+                <h3 className="font-semibold text-slate-100 text-lg">{selectedPlace.name}</h3>
+                <p className="text-slate-300 text-sm">{selectedPlace.address}</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Meal Type</label>
+              <label className="block text-sm font-medium text-slate-200 mb-2">Meal Type</label>
               <div className="flex flex-wrap gap-2 mb-4">
                 {CATEGORIES.filter(c => c.group === 'meal').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -422,7 +422,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'glass-pill border-white/25 text-slate-200 hover:bg-white/10'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >
@@ -432,7 +432,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                   );
                 })}
               </div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sweets</label>
+              <label className="block text-sm font-medium text-slate-200 mb-2">Sweets</label>
               <div className="flex flex-wrap gap-2 mb-4">
                 {CATEGORIES.filter(c => c.group === 'sweets').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -443,7 +443,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'glass-pill border-white/25 text-slate-200 hover:bg-white/10'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >
@@ -453,7 +453,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                   );
                 })}
               </div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Drinks</label>
+              <label className="block text-sm font-medium text-slate-200 mb-2">Drinks</label>
               <div className="flex flex-wrap gap-2 mb-4">
                 {CATEGORIES.filter(c => c.group === 'drinks').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -464,7 +464,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'glass-pill border-white/25 text-slate-200 hover:bg-white/10'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >
@@ -474,7 +474,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                   );
                 })}
               </div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Occasion</label>
+              <label className="block text-sm font-medium text-slate-200 mb-2">Occasion</label>
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.filter(c => c.group === 'occasion').map((cat) => {
                   const isSelected = selectedCategories.includes(cat.value);
@@ -485,7 +485,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
                       className={`
                         flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                         transition-all duration-200 border
-                        ${isSelected ? 'text-white border-transparent shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'}
+                        ${isSelected ? 'text-white border-transparent shadow-md' : 'glass-pill border-white/25 text-slate-200 hover:bg-white/10'}
                       `}
                       style={isSelected ? { backgroundColor: cat.color } : undefined}
                     >
@@ -501,7 +501,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
               const existing = selectedPlace ? getSavedRestaurant(selectedPlace.id) : undefined;
               if (!existing) return null;
               return (
-                <p className="text-xs text-gray-500 -mt-1">
+                <p className="text-xs text-slate-300 -mt-1">
                   Saving again updates this restaurant and can move it between lists.
                 </p>
               );
