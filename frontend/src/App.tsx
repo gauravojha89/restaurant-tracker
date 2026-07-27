@@ -33,8 +33,8 @@ function App() {
 
   return (
     <div className="h-full relative overflow-hidden p-2 sm:p-4">
-      <div className="pointer-events-none absolute -left-24 -top-28 h-72 w-72 rounded-full bg-cyan-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-10 h-80 w-80 rounded-full bg-blue-200/35 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 -top-28 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 top-10 h-80 w-80 rounded-full bg-blue-500/18 blur-3xl" />
       <div className="h-full max-w-5xl mx-auto rounded-[28px] glass-surface-strong overflow-hidden flex flex-col">
         <Header />
         <main className="flex-1 flex flex-col overflow-auto min-h-0">
