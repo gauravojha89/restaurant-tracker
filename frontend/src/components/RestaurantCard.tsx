@@ -102,10 +102,10 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             ? CATEGORIES.find(c => c.value === restaurant.categories[0])
             : null;
           const color = primary?.color ?? '#94a3b8';
-          const emoji = primary?.emoji ?? '🍽️';
+          const emoji = restaurant.listType === 'favorite' ? '💖' : '📍';
           return (
             <div
-              className="relative h-20 flex items-center justify-center overflow-hidden"
+              className="relative h-16 flex items-center justify-center overflow-hidden"
               style={{ background: `linear-gradient(135deg, ${color}2E 0%, ${color}12 100%)` }}
             >
               {/* dot grid */}
@@ -113,7 +113,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 backgroundImage: `radial-gradient(${color}24 1.25px, transparent 1.25px)`,
                 backgroundSize: '16px 16px',
               }} />
-              <span className="relative text-4xl drop-shadow-sm select-none">{emoji}</span>
+              <span className="relative text-3xl drop-shadow-sm select-none">{emoji}</span>
               {restaurant.listType === 'favorite' && (
                 <div className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
                   <Heart className="w-3 h-3 text-red-500 fill-current" />
@@ -124,7 +124,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         })()}
 
         {/* Info */}
-        <div className="p-3">
+        <div className="p-2.5">
           <h3 className="text-sm font-bold text-gray-900 leading-tight mb-0.5 truncate">
             {restaurant.name}
           </h3>
@@ -147,29 +147,9 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             </div>
           )}
 
-          {/* Categories */}
-          <div className="mb-2 rounded-xl border border-gray-100 bg-gray-50 px-2.5 py-1.5">
-            {!isEditingCategories ? (
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-[11px] text-gray-500 truncate">
-                  {restaurant.categories.length > 0
-                    ? restaurant.categories
-                        .map((cat) => getCategoryInfo(cat)?.label ?? cat)
-                        .join(' • ')
-                    : 'No categories yet'}
-                </p>
-                <button
-                  onClick={() => {
-                    setEditedCategories(restaurant.categories);
-                    setIsEditingCategories(true);
-                  }}
-                  className="flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
-                >
-                  <Edit2 className="w-3 h-3" />
-                  Edit
-                </button>
-              </div>
-            ) : (
+          {/* Categories editor (hidden until edit) */}
+          {isEditingCategories && (
+            <div className="mb-2 rounded-xl border border-gray-100 bg-gray-50 px-2.5 py-1.5">
               <div>
                 <div className="mb-2">
                   <p className="text-xs font-medium text-gray-400 mb-1">Meal Type</p>
@@ -240,8 +220,8 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   <button onClick={() => { updateCategories(restaurant.id, editedCategories); setIsEditingCategories(false); }} className="p-1.5 text-primary-500 hover:text-primary-600"><Check className="w-4 h-4" /></button>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Notes */}
           {(restaurant.personalNotes || isEditingNotes) && (
@@ -275,6 +255,15 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           {/* Actions */}
           <div className="flex items-center justify-between pt-1.5 border-t border-gray-100">
             <div className="flex items-center gap-1">
+              <button
+                onClick={() => {
+                  setEditedCategories(restaurant.categories);
+                  setIsEditingCategories(true);
+                }}
+                className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+              >
+                <Edit2 className="w-3.5 h-3.5" /> Edit
+              </button>
               <button onClick={handleViewOnMap}
                 className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
                 <MapPin className="w-3.5 h-3.5" /> View
