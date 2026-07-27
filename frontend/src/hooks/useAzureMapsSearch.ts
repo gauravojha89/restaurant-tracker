@@ -25,7 +25,10 @@ const AZURE_CATEGORY_MAP: Record<string, Category> = {
   coffeeshop: 'coffee',
   tea: 'coffee',
   bakery: 'desserts',
-  'ice cream': 'desserts',
+  'ice cream': 'ice-cream',
+  'ice cream shop': 'ice-cream',
+  gelato: 'ice-cream',
+  'frozen yogurt': 'ice-cream',
   dessert: 'desserts',
   patisserie: 'desserts',
   donut: 'desserts',
@@ -66,6 +69,17 @@ function mapAzureCategories(rawCategories: string[]): Category[] {
     }
   }
   return matched.size > 0 ? [...matched] : ['dinner'];
+}
+
+function stableSearchResultId(r: any): string {
+  if (r?.id && typeof r.id === 'string' && r.id.trim()) {
+    return r.id;
+  }
+
+  const name = String(r?.poi?.name ?? r?.address?.freeformAddress ?? 'unknown').toLowerCase();
+  const lat = Number(r?.position?.lat ?? 0).toFixed(6);
+  const lon = Number(r?.position?.lon ?? 0).toFixed(6);
+  return `poi:${name}:${lat}:${lon}`;
 }
 
 export function useAzureMapsSearch(): UseAzureMapsSearchResult {
@@ -113,7 +127,7 @@ export function useAzureMapsSearch(): UseAzureMapsSearchResult {
       if (!data.results?.length) return [];
 
       return data.results.map((r: any): AzureMapsSearchResult => ({
-        id: r.id,
+        id: stableSearchResultId(r),
         name: r.poi?.name ?? r.address?.freeformAddress ?? 'Unknown',
         address: r.address?.freeformAddress ?? '',
         city:

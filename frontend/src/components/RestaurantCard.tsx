@@ -141,8 +141,28 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           )}
 
           {/* Categories */}
-          <div className="mb-3">
-            {isEditingCategories ? (
+          <div className="mb-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2">
+            {!isEditingCategories ? (
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs text-gray-500 truncate">
+                  {restaurant.categories.length > 0
+                    ? restaurant.categories
+                        .map((cat) => getCategoryInfo(cat)?.label ?? cat)
+                        .join(' • ')
+                    : 'No categories yet'}
+                </p>
+                <button
+                  onClick={() => {
+                    setEditedCategories(restaurant.categories);
+                    setIsEditingCategories(true);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
+                >
+                  <Edit2 className="w-3 h-3" />
+                  Edit
+                </button>
+              </div>
+            ) : (
               <div>
                 <div className="mb-2">
                   <p className="text-xs font-medium text-gray-400 mb-1">Meal Type</p>
@@ -196,23 +216,6 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                   <button onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(false); }} className="p-1.5 text-gray-400 hover:text-gray-600"><X className="w-4 h-4" /></button>
                   <button onClick={() => { updateCategories(restaurant.id, editedCategories); setIsEditingCategories(false); }} className="p-1.5 text-primary-500 hover:text-primary-600"><Check className="w-4 h-4" /></button>
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-wrap items-center gap-1 group">
-                {restaurant.categories.map(cat => {
-                  const info = getCategoryInfo(cat);
-                  return info ? (
-                    <span key={cat}
-                      className="flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs font-medium"
-                      style={{ backgroundColor: `${info.color}15`, color: info.color }}>
-                      {info.emoji} {info.label}
-                    </span>
-                  ) : null;
-                })}
-                <button
-                  onClick={() => { setEditedCategories(restaurant.categories); setIsEditingCategories(true); }}
-                  className="p-0.5 text-gray-300 hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                ><Edit2 className="w-3 h-3" /></button>
               </div>
             )}
           </div>

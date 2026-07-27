@@ -91,14 +91,36 @@ export const useStore = create<AppState>()(
       },
 
       addToList: (restaurant) => {
-        const exists = useStore.getState().savedRestaurants.find((r) => r.id === restaurant.id);
-        if (exists) return;
-        const newRestaurant: SavedRestaurant = { ...restaurant, savedAt: new Date().toISOString() };
+        const now = new Date().toISOString();
+        const existing = useStore.getState().savedRestaurants.find((r) => r.id === restaurant.id);
+
+        const upsertedRestaurant: SavedRestaurant = existing
+          ? {
+              ...existing,
+              ...restaurant,
+              categories: restaurant.categories.length > 0 ? restaurant.categories : existing.categories,
+              listType: restaurant.listType,
+              savedAt: existing.savedAt,
+              visitedAt: restaurant.listType === 'favorite' ? (existing.visitedAt ?? now) : existing.visitedAt,
+              updatedAt: now,
+            }
+          : {
+              ...restaurant,
+              savedAt: now,
+              visitedAt: restaurant.listType === 'favorite' ? now : restaurant.visitedAt,
+            };
+
         set((state) => ({
-          savedRestaurants: [...state.savedRestaurants, newRestaurant],
-          cities: state.cities.includes(restaurant.city) ? state.cities : [...state.cities, restaurant.city],
+          savedRestaurants: existing
+            ? state.savedRestaurants.map((r) => (r.id === upsertedRestaurant.id ? upsertedRestaurant : r))
+            : [...state.savedRestaurants, upsertedRestaurant],
+          cities:
+            upsertedRestaurant.city && !state.cities.includes(upsertedRestaurant.city)
+              ? [...state.cities, upsertedRestaurant.city]
+              : state.cities,
         }));
-        upsertRestaurant(newRestaurant).catch((e) => console.error('addToList sync failed', e));
+
+        upsertRestaurant(upsertedRestaurant).catch((e) => console.error('addToList sync failed', e));
       },
 
       removeFromList: (id) => {

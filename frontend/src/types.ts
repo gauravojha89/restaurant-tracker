@@ -1,4 +1,4 @@
-export type Category = 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'coffee' | 'desserts' | 'everyday' | 'date-night' | 'celebration' | 'bar';
+export type Category = 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'coffee' | 'desserts' | 'ice-cream' | 'everyday' | 'date-night' | 'celebration' | 'bar';
 
 export interface Restaurant {
   id: string;
@@ -43,6 +43,7 @@ export const CATEGORIES: { value: Category; label: string; emoji: string; color:
   { value: 'lunch', label: 'Lunch', emoji: '🥗', color: '#22c55e', group: 'meal' },
   { value: 'dinner', label: 'Dinner', emoji: '🍽️', color: '#8b5cf6', group: 'meal' },
   { value: 'desserts', label: 'Desserts', emoji: '🍰', color: '#f472b6', group: 'meal' },
+  { value: 'ice-cream', label: 'Ice Cream', emoji: '🍨', color: '#60a5fa', group: 'meal' },
   // — Drinks —
   { value: 'coffee', label: 'Coffee', emoji: '☕', color: '#78716c', group: 'drinks' },
   { value: 'bar', label: 'Bar', emoji: '🍹', color: '#d97706', group: 'drinks' },

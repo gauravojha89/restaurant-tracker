@@ -105,6 +105,11 @@ export function MapView() {
     [savedRestaurants]
   );
 
+  const getSavedRestaurant = useCallback(
+    (id: string) => savedRestaurants.find((r) => r.id === id),
+    [savedRestaurants]
+  );
+
   // ── 1. Initialise map once ───────────────────
   useEffect(() => {
     if (!containerRef.current || mapRef.current || !AZURE_MAPS_KEY) return;
@@ -242,7 +247,7 @@ export function MapView() {
       selectedMarkerRef.current = null;
     }
 
-    if (selectedPlace && !isAlreadySaved(selectedPlace.id)) {
+    if (selectedPlace) {
       const marker = new atlas.HtmlMarker({
         position: [selectedPlace.longitude, selectedPlace.latitude],
         htmlContent: markerHtml('#0ea5e9', false, true),
@@ -260,8 +265,9 @@ export function MapView() {
   // ── Search result handler ────────────────────
   function handleSearchSelect(result: SelectedPlace) {
     if (!mapRef.current) return;
+    const existing = getSavedRestaurant(result.id);
     setSelectedPlace(result);
-    setSelectedCategories(result.categories);
+    setSelectedCategories(existing?.categories.length ? existing.categories : result.categories);
     isProgrammaticMove.current = true;
     lastSyncedView.current = { longitude: result.longitude, latitude: result.latitude, zoom: 16 };
     mapRef.current.setCamera({
@@ -328,13 +334,22 @@ export function MapView() {
         `}</style>
 
         {/* Selected place card */}
-        {selectedPlace && !isAlreadySaved(selectedPlace.id) && (
+        {selectedPlace && (
           <div className="absolute bottom-6 left-4 right-4 mx-auto max-w-md pointer-events-none">
             <div className="bg-white rounded-2xl shadow-2xl p-4 border border-gray-200 pointer-events-auto">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="font-semibold text-gray-900 truncate">{selectedPlace.name}</h3>
                   <p className="text-sm text-gray-500 truncate">{selectedPlace.address}</p>
+                  {(() => {
+                    const existing = getSavedRestaurant(selectedPlace.id);
+                    if (!existing) return null;
+                    return (
+                      <p className="text-xs text-primary-600 mt-1 font-medium">
+                        Already saved in {existing.listType === 'favorite' ? 'Favorites' : 'To Visit'}
+                      </p>
+                    );
+                  })()}
                 </div>
                 <button
                   onClick={() => setShowAddModal(true)}
@@ -425,6 +440,16 @@ export function MapView() {
                 })}
               </div>
             </div>
+
+            {(() => {
+              const existing = selectedPlace ? getSavedRestaurant(selectedPlace.id) : undefined;
+              if (!existing) return null;
+              return (
+                <p className="text-xs text-gray-500 -mt-1">
+                  Saving again updates this restaurant and can move it between lists.
+                </p>
+              );
+            })()}
 
             <div className="flex gap-3 pt-2">
               <button

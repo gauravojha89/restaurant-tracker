@@ -29,7 +29,7 @@ export function FilterBar() {
     });
   };
 
-  // Emoji-only when inactive → expands to emoji + label when active (Apple Maps style)
+  // Always show labels so category switching is obvious on mobile.
   const Pill = ({ cat }: { cat: typeof CATEGORIES[0] }) => {
     const isActive = filters.categories.includes(cat.value);
     return (
@@ -38,13 +38,11 @@ export function FilterBar() {
         className="flex items-center gap-1 rounded-full flex-shrink-0 transition-all duration-200 active:scale-95"
         style={isActive
           ? { backgroundColor: cat.color, color: '#fff', padding: '5px 10px 5px 7px' }
-          : { backgroundColor: `${cat.color}18`, color: cat.color, padding: '5px 8px' }
+          : { backgroundColor: `${cat.color}18`, color: cat.color, padding: '5px 10px 5px 7px' }
         }
       >
         <span className="text-base leading-none">{cat.emoji}</span>
-        {isActive && (
-          <span className="text-xs font-semibold whitespace-nowrap">{cat.label}</span>
-        )}
+        <span className="text-xs font-semibold whitespace-nowrap">{cat.label}</span>
       </button>
     );
   };
