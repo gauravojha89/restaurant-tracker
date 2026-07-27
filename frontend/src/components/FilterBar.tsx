@@ -41,8 +41,8 @@ export function FilterBar() {
           onClick={() => setOpenMenu(isOpen ? null : group)}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
             selected.length > 0
-              ? 'bg-primary-500 text-white border-primary-500'
-              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+              ? 'bg-primary-500/90 text-white border-primary-400/90'
+              : 'glass-pill text-slate-700 border-white/70 hover:bg-white/65'
           }`}
         >
           {label}
@@ -53,7 +53,7 @@ export function FilterBar() {
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 overflow-hidden">
+          <div className="absolute top-full left-0 mt-2 w-56 glass-surface rounded-2xl z-50 overflow-hidden">
             <div className="max-h-64 overflow-y-auto p-2">
               {CATEGORIES.filter((c) => c.group === group).map((cat) => {
                 const active = filters.categories.includes(cat.value);
@@ -62,7 +62,7 @@ export function FilterBar() {
                     key={cat.value}
                     onClick={() => toggleCategory(cat.value)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm transition-colors ${
-                      active ? 'bg-primary-50 text-primary-700' : 'hover:bg-gray-50 text-gray-700'
+                      active ? 'bg-primary-50/85 text-primary-800' : 'hover:bg-white/55 text-slate-700'
                     }`}
                   >
                     <span className="flex items-center gap-2">
@@ -81,10 +81,10 @@ export function FilterBar() {
   };
 
   return (
-    <div ref={containerRef} className="bg-slate-200/70 border-b border-slate-300/70 px-3 py-2.5">
+    <div ref={containerRef} className="glass-surface border-b glass-divider px-3 py-2.5">
       <div className="flex items-center gap-1.5 px-1 mb-2">
-        <SlidersHorizontal className="w-3.5 h-3.5 text-gray-400" />
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Filters</span>
+        <SlidersHorizontal className="w-3.5 h-3.5 text-slate-500" />
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Filters</span>
       </div>
 
       <div className="flex items-center gap-1.5 pb-1">
@@ -93,8 +93,8 @@ export function FilterBar() {
             onClick={() => setOpenMenu(openMenu === 'city' ? null : 'city')}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
               filters.city
-                ? 'bg-primary-500 text-white border-primary-500'
-                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                ? 'bg-primary-500/90 text-white border-primary-400/90'
+                : 'glass-pill text-slate-700 border-white/70 hover:bg-white/65'
             }`}
           >
             📍 <span className="max-w-16 sm:max-w-24 truncate">{filters.city || 'All Cities'}</span>
@@ -102,15 +102,15 @@ export function FilterBar() {
           </button>
 
           {openMenu === 'city' && (
-            <div className="absolute top-full left-0 mt-2 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 overflow-hidden">
+            <div className="absolute top-full left-0 mt-2 w-52 glass-surface rounded-2xl z-50 overflow-hidden">
               <div className="max-h-64 overflow-y-auto p-2">
                 <button
                   onClick={() => {
                     setFilters({ city: '' });
                     setOpenMenu(null);
                   }}
-                  className={`w-full px-3 py-2 rounded-xl text-left text-sm hover:bg-gray-50 ${
-                    !filters.city ? 'text-primary-700 bg-primary-50' : 'text-gray-700'
+                  className={`w-full px-3 py-2 rounded-xl text-left text-sm hover:bg-white/55 ${
+                    !filters.city ? 'text-primary-800 bg-primary-50/85' : 'text-slate-700'
                   }`}
                 >
                   All Cities
@@ -122,8 +122,8 @@ export function FilterBar() {
                       setFilters({ city });
                       setOpenMenu(null);
                     }}
-                    className={`w-full px-3 py-2 rounded-xl text-left text-sm hover:bg-gray-50 ${
-                      filters.city === city ? 'text-primary-700 bg-primary-50' : 'text-gray-700'
+                    className={`w-full px-3 py-2 rounded-xl text-left text-sm hover:bg-white/55 ${
+                      filters.city === city ? 'text-primary-800 bg-primary-50/85' : 'text-slate-700'
                     }`}
                   >
                     {city}
@@ -142,7 +142,7 @@ export function FilterBar() {
         {hasFilters && (
           <button
             onClick={clearFilters}
-            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium text-gray-500 border border-gray-200 bg-white hover:bg-gray-50"
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium text-slate-600 border border-white/70 glass-pill hover:bg-white/65"
           >
             <X className="w-3 h-3" /> Clear
           </button>

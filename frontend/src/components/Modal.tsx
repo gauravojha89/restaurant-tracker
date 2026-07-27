@@ -43,15 +43,15 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className={`modal-content bg-white rounded-2xl shadow-2xl w-full ${sizeClasses[size]}`}
+        className={`modal-content rounded-2xl w-full ${sizeClasses[size]}`}
         onClick={(e) => e.stopPropagation()}
       >
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between px-6 py-4 border-b glass-divider">
             <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 -m-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 -m-2 text-gray-400 hover:text-gray-700 hover:bg-white/60 rounded-lg transition-colors"
             >
               <X className="w-5 h-5" />
             </button>

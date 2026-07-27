@@ -95,11 +95,11 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-2xl border border-gray-200/80 bg-white/95 backdrop-blur-sm shadow-[0_1px_2px_rgba(15,23,42,0.06)]"
+        className="group/card rounded-2xl glass-surface"
       >
         <button
           onClick={() => setIsExpanded((prev) => !prev)}
-          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-gray-50/80"
+          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-white/40"
           aria-expanded={isExpanded}
         >
           <div className="flex items-center justify-between gap-3">
@@ -109,7 +109,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
               </h3>
             </div>
             <ChevronDown
-              className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+              className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
             />
           </div>
         </button>
@@ -117,12 +117,12 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         <div
           className={`overflow-hidden transition-all duration-300 ease-out ${isExpanded ? 'max-h-[680px] opacity-100' : 'max-h-0 opacity-0'}`}
         >
-          <div className="border-t border-gray-100 px-4 pb-3.5 pt-2.5">
+          <div className="border-t glass-divider px-4 pb-3.5 pt-2.5">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-gray-400">
+              <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-slate-500">
                 {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}
               </span>
-              {homeDistance && <span className="text-[11px] text-gray-500">{homeDistance} from home</span>}
+              {homeDistance && <span className="text-[11px] text-slate-600">{homeDistance} from home</span>}
             </div>
             <p className="text-[10px] text-gray-400 flex items-center gap-0.5 truncate mb-1">
               <MapPin className="w-3 h-3 flex-shrink-0" />

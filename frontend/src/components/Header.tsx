@@ -19,46 +19,46 @@ export function Header() {
     badgeInactive: string;
   }> = {
     toVisit: {
-      active: 'bg-sky-100 text-sky-800 shadow-sm',
-      inactive: 'text-sky-700/80 bg-sky-50/60 hover:bg-sky-100/80',
-      badgeActive: 'bg-sky-200 text-sky-800',
-      badgeInactive: 'bg-sky-100 text-sky-700',
+      active: 'text-sky-900 border border-sky-100/70 bg-gradient-to-r from-sky-100/80 to-sky-50/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]',
+      inactive: 'text-sky-900/75 glass-pill hover:bg-white/60',
+      badgeActive: 'bg-sky-200/80 text-sky-900',
+      badgeInactive: 'bg-white/65 text-sky-800',
     },
     favorites: {
-      active: 'bg-rose-100 text-rose-800 shadow-sm',
-      inactive: 'text-rose-700/80 bg-rose-50/60 hover:bg-rose-100/80',
-      badgeActive: 'bg-rose-200 text-rose-800',
-      badgeInactive: 'bg-rose-100 text-rose-700',
+      active: 'text-rose-900 border border-rose-100/70 bg-gradient-to-r from-rose-100/80 to-rose-50/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]',
+      inactive: 'text-rose-900/75 glass-pill hover:bg-white/60',
+      badgeActive: 'bg-rose-200/80 text-rose-900',
+      badgeInactive: 'bg-white/65 text-rose-800',
     },
     map: {
-      active: 'bg-emerald-100 text-emerald-800 shadow-sm',
-      inactive: 'text-emerald-700/80 bg-emerald-50/60 hover:bg-emerald-100/80',
-      badgeActive: 'bg-emerald-200 text-emerald-800',
-      badgeInactive: 'bg-emerald-100 text-emerald-700',
+      active: 'text-emerald-900 border border-emerald-100/70 bg-gradient-to-r from-emerald-100/80 to-emerald-50/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]',
+      inactive: 'text-emerald-900/75 glass-pill hover:bg-white/60',
+      badgeActive: 'bg-emerald-200/80 text-emerald-900',
+      badgeInactive: 'bg-white/65 text-emerald-800',
     },
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-primary-100/70 bg-white/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b glass-divider bg-white/15 backdrop-blur-xl">
       <div className="max-w-4xl mx-auto px-4 pt-3 pb-3">
         <div className="mb-2.5">
-          <div className="relative overflow-hidden rounded-2xl border border-slate-700/70 bg-gradient-to-r from-slate-900 via-slate-800 to-cyan-900 px-3 py-2.5 shadow-md">
-            <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-cyan-300/20" />
-            <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-primary-300/20" />
+          <div className="glass-surface relative overflow-hidden rounded-2xl px-3 py-2.5">
+            <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-cyan-200/35" />
+            <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-blue-200/35" />
             <div className="relative flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-cyan-300 to-primary-300 text-slate-900 flex items-center justify-center text-base shadow-sm">
+              <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-cyan-100 to-sky-200 text-slate-700 flex items-center justify-center text-base border border-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
                 🍽️
               </div>
               <div className="min-w-0">
-                <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-white leading-none truncate">
+                <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-slate-900 leading-none truncate">
                   WishBite
                 </h1>
-                <p className="text-[11px] text-cyan-100/90 mt-0.5 truncate">Your personal food list</p>
+                <p className="text-[11px] text-slate-600 mt-0.5 truncate">Your personal food list</p>
               </div>
             </div>
           </div>
         </div>
-        <nav className="grid grid-cols-3 rounded-2xl bg-gray-100/90 p-1 gap-1">
+        <nav className="grid grid-cols-3 rounded-2xl glass-surface p-1 gap-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;

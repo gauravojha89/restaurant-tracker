@@ -31,7 +31,7 @@ export function CityPickerModal({ onDone, title = 'Set your home address' }: Cit
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
+      <div className="glass-surface rounded-2xl p-8 max-w-sm w-full mx-4 text-center">
         <div className="text-4xl mb-3">📍</div>
         <h2 className="text-xl font-bold text-gray-900 mb-1">{title}</h2>
         <p className="text-sm text-gray-500 mb-6">
@@ -44,7 +44,7 @@ export function CityPickerModal({ onDone, title = 'Set your home address' }: Cit
           onKeyDown={(e) => e.key === 'Enter' && handleConfirm()}
           placeholder="e.g. 123 Main St, Atlanta"
           autoFocus
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 mb-2"
+          className="w-full px-4 py-3 glass-pill border-white/70 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 mb-2"
         />
         {error && <p className="text-xs text-red-500 mb-3">{error}</p>}
         <button

@@ -315,7 +315,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
   if (!AZURE_MAPS_KEY) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-100">
-        <div className="text-center p-8 bg-white rounded-2xl shadow-lg max-w-md">
+        <div className="text-center p-8 glass-surface rounded-2xl max-w-md">
           <div className="text-4xl mb-4">🗺️</div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Azure Maps Key Needed</h2>
           <p className="text-gray-600 mb-3">Add your Azure Maps key to the <code className="bg-gray-100 px-1 rounded">.env</code> file:</p>
@@ -328,14 +328,14 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
   return (
     <div className="flex-1 flex flex-col">
       {/* Search bar */}
-      <div className="p-4 bg-white border-b border-gray-200">
+      <div className="p-4 glass-surface border-b glass-divider">
         <div className="flex items-center gap-2.5">
           <div className="flex-1 min-w-0">
             <SearchBar onSelectResult={handleSearchSelect} />
           </div>
           <button
             onClick={onChangeCityClick}
-            className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-full transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-slate-700 glass-pill border-white/70 hover:bg-white/65 rounded-full transition-colors"
             title="Change home address"
           >
             <MapPin className="w-3.5 h-3.5 text-primary-500" />
@@ -343,7 +343,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
           </button>
           <a
             href="/.auth/logout?post_logout_redirect_uri=/"
-            className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 border border-gray-200 rounded-full transition-colors"
+            className="p-2.5 text-slate-500 hover:text-slate-700 hover:bg-white/65 border border-white/70 glass-pill rounded-full transition-colors"
             title="Sign out"
           >
             <LogOut className="w-4 h-4" />
@@ -366,7 +366,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
         {/* Selected place card */}
         {selectedPlace && (
           <div className="absolute bottom-6 left-4 right-4 mx-auto max-w-md pointer-events-none">
-            <div className="bg-white rounded-2xl shadow-2xl p-4 border border-gray-200 pointer-events-auto">
+            <div className="glass-surface rounded-2xl p-4 pointer-events-auto">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="font-semibold text-gray-900 truncate">{selectedPlace.name}</h3>

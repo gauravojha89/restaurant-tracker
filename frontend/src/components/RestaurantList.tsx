@@ -37,7 +37,7 @@ export function RestaurantList({ listType }: RestaurantListProps) {
 
   return (
     <div className="flex-1 min-h-0 p-3 sm:p-4">
-      <div className="h-full max-w-4xl mx-auto rounded-[24px] border border-slate-300/80 bg-slate-100/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_10px_28px_rgba(15,23,42,0.10)] overflow-hidden flex flex-col">
+      <div className="h-full max-w-4xl mx-auto rounded-[24px] glass-surface overflow-hidden flex flex-col">
         <FilterBar />
 
         {restaurants.length === 0 ? (
@@ -46,7 +46,7 @@ export function RestaurantList({ listType }: RestaurantListProps) {
           <div className="flex-1 overflow-y-auto p-4 pb-8">
             <div className="max-w-3xl mx-auto">
               <div className="flex items-center justify-between px-1 mb-3">
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-slate-600">
                   {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
                 </span>
               </div>
