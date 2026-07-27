@@ -4,6 +4,7 @@ import type { SavedRestaurant, Category } from '../types';
 import { CATEGORIES } from '../types';
 import { useStore } from '../store';
 import { Modal } from './Modal';
+import { distanceKm, formatDistanceKm } from '../utils/distance';
 
 interface RestaurantCardProps {
   restaurant: SavedRestaurant;
@@ -11,7 +12,7 @@ interface RestaurantCardProps {
 }
 
 export function RestaurantCard({ restaurant, compact = false }: RestaurantCardProps) {
-  const { removeFromList, moveToFavorites, updateNotes, updateCategories, setMapView, setActiveTab } = useStore();
+  const { removeFromList, moveToFavorites, updateNotes, updateCategories, setMapView, setActiveTab, homeCoordinates } = useStore();
   const [showMoveModal, setShowMoveModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isEditingNotes, setIsEditingNotes] = useState(false);
@@ -22,6 +23,15 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
 
   const getCategoryInfo = (category: Category) =>
     CATEGORIES.find((c) => c.value === category);
+
+  const homeDistance = homeCoordinates
+    ? formatDistanceKm(
+        distanceKm(homeCoordinates, {
+          latitude: restaurant.latitude,
+          longitude: restaurant.longitude,
+        })
+      )
+    : null;
 
   const handleViewOnMap = () => {
     setMapView({
@@ -122,6 +132,9 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
             <MapPin className="w-3 h-3 flex-shrink-0" />
             {restaurant.address}
           </p>
+          {homeDistance && (
+            <p className="text-xs text-gray-500 mb-2">{homeDistance} from home</p>
+          )}
 
           {/* Stars */}
           {restaurant.listType === 'favorite' && restaurant.personalRating && (

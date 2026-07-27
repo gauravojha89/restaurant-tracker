@@ -22,7 +22,7 @@ export function CityPickerModal({ onDone, title = "Where are you based?" }: City
     const result = await geocodeCity(trimmed);
     setLoading(false);
     if (!result) { setError("Couldn't find that city — try being more specific (e.g. \"Atlanta, GA\")."); return; }
-    setDefaultCity(result.label);
+    setDefaultCity(result.label, { latitude: result.latitude, longitude: result.longitude });
     setMapView({ latitude: result.latitude, longitude: result.longitude, zoom: 12 });
     onDone();
   };

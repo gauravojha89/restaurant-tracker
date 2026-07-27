@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { useShallow } from 'zustand/react/shallow';
 import type { SavedRestaurant, SearchFilters, MapViewState } from './types';
 import { fetchRestaurants, upsertRestaurant, deleteRestaurantApi } from './api';
+import type { Coordinates } from './utils/distance';
 
 interface AppState {
   // Map state
@@ -32,7 +33,8 @@ interface AppState {
 
   // Default home city (null = not set yet → show picker)
   defaultCity: string | null;
-  setDefaultCity: (city: string) => void;
+  homeCoordinates: Coordinates | null;
+  setDefaultCity: (city: string, homeCoordinates?: Coordinates) => void;
 
   // Cities (derived from saved restaurants + default)
   cities: string[];
@@ -173,7 +175,12 @@ export const useStore = create<AppState>()(
 
       // Default city
       defaultCity: null,
-      setDefaultCity: (city) => set({ defaultCity: city }),
+      homeCoordinates: null,
+      setDefaultCity: (city, homeCoordinates) =>
+        set((state) => ({
+          defaultCity: city,
+          homeCoordinates: homeCoordinates ?? state.homeCoordinates,
+        })),
 
       // Cities
       cities: [],
@@ -186,19 +193,21 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'restaurant-tracker-storage',
-      version: 4,
+      version: 5,
       migrate: (persistedState): Partial<AppState> => {
         const s = persistedState as Partial<AppState>;
         return {
           mapView: s.mapView ?? DEFAULT_MAP_VIEW,
           activeTab: s.activeTab ?? 'toVisit',
           defaultCity: s.defaultCity ?? null,
+          homeCoordinates: s.homeCoordinates ?? null,
         };
       },
       partialize: (state) => ({
         mapView: state.mapView,
         activeTab: state.activeTab,
         defaultCity: state.defaultCity,
+        homeCoordinates: state.homeCoordinates,
       }),
     }
   )

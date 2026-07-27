@@ -2,11 +2,11 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import * as atlas from 'azure-maps-control';
 import 'azure-maps-control/dist/atlas.min.css';
 import { Plus, Heart, MapPin } from 'lucide-react';
-import { useStore, useFilteredRestaurants } from '../store';
+import { useStore } from '../store';
 import { CATEGORIES, type Category, type SavedRestaurant } from '../types';
 import { SearchBar } from './SearchBar';
-import { FilterBar } from './FilterBar';
 import { Modal } from './Modal';
+import { distanceKm, formatDistanceKm } from '../utils/distance';
 
 const AZURE_MAPS_KEY = import.meta.env.VITE_AZURE_MAPS_KEY || '';
 
@@ -92,8 +92,7 @@ export function MapView() {
   const lastSyncedView = useRef({ longitude: 0, latitude: 0, zoom: 0 });
   const markerClickedRef = useRef(false); // prevent map-click from firing after marker click
 
-  const { mapView, setMapView, addToList, savedRestaurants } = useStore();
-  const filteredRestaurants = useFilteredRestaurants();
+  const { mapView, setMapView, addToList, savedRestaurants, homeCoordinates } = useStore();
 
   const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -198,8 +197,8 @@ export function MapView() {
     const map = mapRef.current;
     const current = savedMarkersRef.current;
 
-    // Remove markers no longer in filteredRestaurants
-    const filteredIds = new Set(filteredRestaurants.map((r) => r.id));
+    // Remove markers no longer in savedRestaurants
+    const filteredIds = new Set(savedRestaurants.map((r) => r.id));
     for (const [id, marker] of current) {
       if (!filteredIds.has(id)) {
         map.markers.remove(marker);
@@ -208,7 +207,7 @@ export function MapView() {
     }
 
     // Add / update markers
-    for (const restaurant of filteredRestaurants) {
+    for (const restaurant of savedRestaurants) {
       const existing = current.get(restaurant.id);
       if (existing) {
         // Update HTML in case listType changed
@@ -234,7 +233,7 @@ export function MapView() {
         current.set(restaurant.id, marker);
       }
     }
-  }, [filteredRestaurants, mapReady]);
+  }, [savedRestaurants, mapReady]);
 
   // ── 4. Handle selected place (search result) marker ──
   useEffect(() => {
@@ -299,6 +298,15 @@ export function MapView() {
     );
   }
 
+  const selectedPlaceDistance = selectedPlace && homeCoordinates
+    ? formatDistanceKm(
+        distanceKm(homeCoordinates, {
+          latitude: selectedPlace.latitude,
+          longitude: selectedPlace.longitude,
+        })
+      )
+    : null;
+
   // ── No key configured state ──────────────────
   if (!AZURE_MAPS_KEY) {
     return (
@@ -319,7 +327,6 @@ export function MapView() {
       <div className="p-4 bg-white border-b border-gray-200">
         <SearchBar onSelectResult={handleSearchSelect} />
       </div>
-      <FilterBar />
 
       {/* Map container — capped height on desktop, flex on mobile */}
       <div className="flex-1 md:flex-none md:h-[52vh] relative">
@@ -341,6 +348,11 @@ export function MapView() {
                 <div className="min-w-0">
                   <h3 className="font-semibold text-gray-900 truncate">{selectedPlace.name}</h3>
                   <p className="text-sm text-gray-500 truncate">{selectedPlace.address}</p>
+                  {selectedPlaceDistance && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      {selectedPlaceDistance} from home
+                    </p>
+                  )}
                   {(() => {
                     const existing = getSavedRestaurant(selectedPlace.id);
                     if (!existing) return null;
