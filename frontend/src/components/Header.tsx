@@ -7,9 +7,9 @@ export function Header() {
   const favoritesList = useFavoritesList();
 
   const tabs = [
-    { id: 'toVisit' as const, label: 'To Visit', icon: MapPin, count: toVisitList.length },
-    { id: 'favorites' as const, label: 'Favorites', icon: Heart, count: favoritesList.length },
     { id: 'map' as const, label: 'Explore', icon: Map, count: null },
+    { id: 'favorites' as const, label: 'Favorites', icon: Heart, count: favoritesList.length },
+    { id: 'toVisit' as const, label: 'To Visit', icon: MapPin, count: toVisitList.length },
   ];
 
   const tabColors: Record<(typeof tabs)[number]['id'], {
