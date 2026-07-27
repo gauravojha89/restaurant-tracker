@@ -42,18 +42,18 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b glass-divider bg-slate-950/45 backdrop-blur-xl">
       <div className="max-w-4xl mx-auto px-4 pt-3 pb-3">
         <div className="mb-2.5">
-          <div className="relative overflow-hidden rounded-2xl px-3 py-2.5 border border-[#eadcc9] bg-gradient-to-r from-[#f5ead8] via-[#efe1cb] to-[#e7d4b9] shadow-[0_10px_22px_rgba(0,0,0,0.28)]">
-            <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-white/25" />
-            <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-amber-200/30" />
+          <div className="relative overflow-hidden rounded-2xl px-3 py-2.5 border border-cyan-300/30 bg-gradient-to-r from-[#10213b] via-[#153451] to-[#115164] shadow-[0_12px_24px_rgba(0,0,0,0.34)]">
+            <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-cyan-300/24" />
+            <div className="absolute -left-6 -bottom-7 h-16 w-16 rounded-full bg-blue-300/20" />
             <div className="relative flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-[#f1d8b6] to-[#e8c79e] text-amber-900 flex items-center justify-center text-base border border-[#e3c59e] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
+              <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-cyan-300/55 to-sky-300/45 text-slate-900 flex items-center justify-center text-base border border-cyan-100/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.62)]">
                 🍽️
               </div>
               <div className="min-w-0">
-                <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-[#3b2a18] leading-none truncate">
+                <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-slate-50 leading-none truncate">
                   WishBite
                 </h1>
-                <p className="text-[11px] text-[#6c5440] mt-0.5 truncate">Your personal food list</p>
+                <p className="text-[11px] text-cyan-100/90 mt-0.5 truncate">Your personal food list</p>
               </div>
             </div>
           </div>

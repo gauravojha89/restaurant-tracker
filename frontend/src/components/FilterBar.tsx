@@ -53,7 +53,7 @@ export function FilterBar() {
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-56 glass-surface rounded-2xl z-50 overflow-hidden">
+          <div className="absolute top-full left-0 mt-2 w-56 glass-surface rounded-2xl z-[80] overflow-hidden">
             <div className="max-h-64 overflow-y-auto p-2">
               {CATEGORIES.filter((c) => c.group === group).map((cat) => {
                 const active = filters.categories.includes(cat.value);
@@ -81,7 +81,7 @@ export function FilterBar() {
   };
 
   return (
-    <div ref={containerRef} className="glass-surface border-b glass-divider px-3 py-2.5">
+    <div ref={containerRef} className="relative z-40 glass-surface border-b glass-divider px-3 py-2.5 overflow-visible">
       <div className="flex items-center gap-1.5 px-1 mb-2">
         <SlidersHorizontal className="w-3.5 h-3.5 text-slate-300" />
         <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Filters</span>
@@ -102,7 +102,7 @@ export function FilterBar() {
           </button>
 
           {openMenu === 'city' && (
-            <div className="absolute top-full left-0 mt-2 w-52 glass-surface rounded-2xl z-50 overflow-hidden">
+            <div className="absolute top-full left-0 mt-2 w-52 glass-surface rounded-2xl z-[80] overflow-hidden">
               <div className="max-h-64 overflow-y-auto p-2">
                 <button
                   onClick={() => {
