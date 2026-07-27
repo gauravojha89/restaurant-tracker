@@ -41,7 +41,7 @@ function App() {
       </main>
       {showCityPicker && (
         <CityPickerModal
-          title={defaultCity ? 'Change your home city' : 'Where are you based?'}
+          title={defaultCity ? 'Change your home address' : 'Set your home address'}
           onDone={() => setShowCityPicker(false)}
         />
       )}

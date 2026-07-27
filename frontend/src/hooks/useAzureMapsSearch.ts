@@ -202,3 +202,45 @@ export async function geocodeCity(
     return null;
   }
 }
+
+export async function geocodeAddress(
+  address: string
+): Promise<{ latitude: number; longitude: number; label: string; city: string } | null> {
+  if (!AZURE_MAPS_KEY) return null;
+  try {
+    const params = new URLSearchParams({
+      'api-version': '1.0',
+      query: address,
+      typeahead: 'false',
+      limit: '1',
+      'subscription-key': AZURE_MAPS_KEY,
+    });
+
+    const res = await fetch(`https://atlas.microsoft.com/search/address/json?${params}`);
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    const r = data.results?.[0];
+    if (!r) return null;
+
+    const label =
+      r.address?.freeformAddress ??
+      r.address?.streetName ??
+      address;
+
+    const city =
+      r.address?.municipality ??
+      r.address?.localName ??
+      r.address?.countrySubdivision ??
+      '';
+
+    return {
+      latitude: r.position.lat,
+      longitude: r.position.lon,
+      label,
+      city,
+    };
+  } catch {
+    return null;
+  }
+}
