@@ -36,29 +36,27 @@ export function RestaurantList({ listType }: RestaurantListProps) {
   const restaurants = useFilteredRestaurants(listType);
 
   return (
-    <div className="flex-1 min-h-0 p-3 sm:p-4">
-      <div className="h-full max-w-4xl mx-auto rounded-[24px] glass-surface overflow-visible flex flex-col">
-        <FilterBar />
+    <div className="flex-1 min-h-0 max-w-4xl mx-auto w-full px-3 sm:px-4 pb-4">
+      <FilterBar />
 
-        {restaurants.length === 0 ? (
-          <EmptyState listType={listType} />
-        ) : (
-          <div className="flex-1 overflow-y-auto p-4 pb-8 relative z-0">
-            <div className="max-w-3xl mx-auto">
-              <div className="flex items-center justify-between px-1 mb-3">
-                <span className="text-sm text-slate-300">
-                  {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
-                </span>
-              </div>
-              <div className="space-y-2.5">
-                {restaurants.map((restaurant) => (
-                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-                ))}
-              </div>
+      {restaurants.length === 0 ? (
+        <EmptyState listType={listType} />
+      ) : (
+        <div className="flex-1 overflow-y-auto pt-3 pb-8 relative z-0">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center justify-between px-1 mb-3">
+              <span className="text-sm text-slate-300">
+                {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
+              </span>
+            </div>
+            <div className="space-y-2.5">
+              {restaurants.map((restaurant) => (
+                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+              ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

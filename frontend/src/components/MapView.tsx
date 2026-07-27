@@ -328,7 +328,7 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
   return (
     <div className="flex-1 flex flex-col">
       {/* Search bar */}
-      <div className="p-4 glass-surface border-b glass-divider">
+      <div className="p-4">
         <div className="flex items-center gap-2.5">
           <div className="flex-1 min-w-0">
             <SearchBar onSelectResult={handleSearchSelect} />
