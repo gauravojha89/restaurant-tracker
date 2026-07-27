@@ -4,6 +4,7 @@ export interface Coordinates {
 }
 
 const EARTH_RADIUS_KM = 6371;
+const KM_TO_MILES = 0.621371;
 
 function toRadians(value: number): number {
   return (value * Math.PI) / 180;
@@ -34,4 +35,20 @@ export function formatDistanceKm(valueKm: number): string {
   }
 
   return `${Math.round(valueKm)} km`;
+}
+
+export function distanceMiles(from: Coordinates, to: Coordinates): number {
+  return distanceKm(from, to) * KM_TO_MILES;
+}
+
+export function formatDistanceMiles(valueMiles: number): string {
+  if (valueMiles < 0.1) {
+    return `${Math.round(valueMiles * 5280)} ft`;
+  }
+
+  if (valueMiles < 10) {
+    return `${valueMiles.toFixed(1)} mi`;
+  }
+
+  return `${Math.round(valueMiles)} mi`;
 }

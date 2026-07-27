@@ -4,7 +4,7 @@ import type { SavedRestaurant, Category } from '../types';
 import { CATEGORIES } from '../types';
 import { useStore } from '../store';
 import { Modal } from './Modal';
-import { distanceKm, formatDistanceKm } from '../utils/distance';
+import { distanceMiles, formatDistanceMiles } from '../utils/distance';
 
 interface RestaurantCardProps {
   restaurant: SavedRestaurant;
@@ -24,9 +24,15 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   const getCategoryInfo = (category: Category) =>
     CATEGORIES.find((c) => c.value === category);
 
+  const primaryCategory = restaurant.categories.length > 0
+    ? CATEGORIES.find((c) => c.value === restaurant.categories[0])
+    : null;
+
+  const photoColor = primaryCategory?.color ?? '#94a3b8';
+
   const homeDistance = homeCoordinates
-    ? formatDistanceKm(
-        distanceKm(homeCoordinates, {
+    ? formatDistanceMiles(
+        distanceMiles(homeCoordinates, {
           latitude: restaurant.latitude,
           longitude: restaurant.longitude,
         })
@@ -94,39 +100,54 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-2xl bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md"
+        className="group/card rounded-[18px] bg-[#fffdf8] border border-[#ece9df] shadow-[0_8px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]"
       >
-        <div className={`h-1.5 rounded-t-2xl ${restaurant.listType === 'favorite' ? 'bg-rose-300' : 'bg-sky-300'}`} />
+        <div className="p-2 pb-0">
+          <div
+            className="h-14 rounded-[12px] border border-white/70 shadow-inner overflow-hidden"
+            style={{
+              background: `linear-gradient(135deg, ${photoColor}25 0%, ${photoColor}12 60%, #ffffff 100%)`,
+            }}
+          >
+            <div
+              className="h-full w-full"
+              style={{
+                backgroundImage: `radial-gradient(${photoColor}30 1px, transparent 1px)`,
+                backgroundSize: '12px 12px',
+              }}
+            />
+          </div>
+        </div>
 
-        {/* Info */}
-        <div className="p-2.5">
-          <div className="flex items-start justify-between gap-2 mb-0.5">
-            <h3 className="text-sm font-bold text-gray-900 leading-tight truncate">
+        <div
+          className="mx-2 mt-2 rounded-[10px] px-2.5 py-1.5"
+          style={{ backgroundColor: `${photoColor}22` }}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-[12px] font-semibold text-gray-900 leading-tight truncate">
               {restaurant.name}
             </h3>
-            <span
-              className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold whitespace-nowrap ${
-                restaurant.listType === 'favorite'
-                  ? 'bg-rose-100 text-rose-700'
-                  : 'bg-sky-100 text-sky-700'
-              }`}
-            >
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold whitespace-nowrap bg-white/70 text-gray-700">
               {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}
             </span>
           </div>
-          <p className="text-[11px] text-gray-400 flex items-center gap-0.5 truncate mb-1.5">
+        </div>
+
+        {/* Info */}
+        <div className="p-2.5">
+          <p className="text-[10px] text-gray-400 flex items-center gap-0.5 truncate mb-1">
             <MapPin className="w-3 h-3 flex-shrink-0" />
             {restaurant.address}
           </p>
           {homeDistance && (
-            <p className="text-[11px] text-gray-500 mb-1.5">{homeDistance} from home</p>
+            <p className="text-[10px] text-gray-500 mb-1.5">{homeDistance} from home</p>
           )}
 
           {/* Stars */}
           {restaurant.listType === 'favorite' && restaurant.personalRating && (
             <div className="flex items-center gap-0.5 mb-1.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`w-3 h-3 ${
+                <Star key={i} className={`w-2.5 h-2.5 ${
                   i < restaurant.personalRating! ? 'text-yellow-400 fill-current' : 'text-gray-200'
                 }`} />
               ))}
@@ -249,17 +270,17 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 className="p-1.5 text-gray-500 hover:text-primary-700 hover:bg-primary-50 rounded-md transition-colors"
                 title="Edit categories"
               >
-                <Edit2 className="w-3.5 h-3.5" />
+                <Edit2 className="w-3 h-3" />
               </button>
               <button onClick={handleViewOnMap}
                 className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
                 title="View on map">
-                <MapPin className="w-3.5 h-3.5" />
+                <MapPin className="w-3 h-3" />
               </button>
               <button onClick={openInMaps}
                 className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
                 title="Open in Google Maps">
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3 h-3" />
               </button>
             </div>
             <div className="flex items-center gap-1">
@@ -267,13 +288,13 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
                 <button onClick={() => setShowMoveModal(true)}
                   className="p-1.5 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors"
                   title="Mark as visited">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <CheckCircle2 className="w-3 h-3" />
                 </button>
               )}
               <button onClick={() => setShowDeleteConfirm(true)}
                 className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
                 title="Remove">
-                <Trash2 className="w-3.5 h-3.5" />
+                <Trash2 className="w-3 h-3" />
               </button>
             </div>
           </div>

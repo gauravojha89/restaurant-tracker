@@ -6,7 +6,7 @@ import { useStore } from '../store';
 import { CATEGORIES, type Category, type SavedRestaurant } from '../types';
 import { SearchBar } from './SearchBar';
 import { Modal } from './Modal';
-import { distanceKm, formatDistanceKm } from '../utils/distance';
+import { distanceMiles, formatDistanceMiles } from '../utils/distance';
 
 const AZURE_MAPS_KEY = import.meta.env.VITE_AZURE_MAPS_KEY || '';
 
@@ -303,8 +303,8 @@ export function MapView({ onChangeCityClick }: MapViewProps) {
   }
 
   const selectedPlaceDistance = selectedPlace && homeCoordinates
-    ? formatDistanceKm(
-        distanceKm(homeCoordinates, {
+    ? formatDistanceMiles(
+        distanceMiles(homeCoordinates, {
           latitude: selectedPlace.latitude,
           longitude: selectedPlace.longitude,
         })
