@@ -166,7 +166,7 @@ export const useStore = create<AppState>()(
       clearFilters: () => set({ filters: DEFAULT_FILTERS }),
 
       // UI State
-      activeTab: 'map',
+      activeTab: 'toVisit',
       setActiveTab: (tab) => set({ activeTab: tab }),
       selectedRestaurantId: null,
       setSelectedRestaurantId: (id) => set({ selectedRestaurantId: id }),
@@ -191,7 +191,7 @@ export const useStore = create<AppState>()(
         const s = persistedState as Partial<AppState>;
         return {
           mapView: s.mapView ?? DEFAULT_MAP_VIEW,
-          activeTab: s.activeTab ?? 'map',
+          activeTab: s.activeTab ?? 'toVisit',
           defaultCity: s.defaultCity ?? null,
         };
       },

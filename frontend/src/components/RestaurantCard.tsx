@@ -84,13 +84,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-[22px] overflow-hidden transition-all duration-300"
-        style={{
-          background: '#fff',
-          boxShadow: '0 1px 1px rgba(0,0,0,.06),0 2px 2px rgba(0,0,0,.06),0 4px 4px rgba(0,0,0,.06),0 8px 8px rgba(0,0,0,.06),0 16px 32px rgba(0,0,0,.08)',
-        }}
-        onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-7px)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 2px rgba(0,0,0,.07),0 4px 4px rgba(0,0,0,.07),0 8px 8px rgba(0,0,0,.07),0 16px 16px rgba(0,0,0,.07),0 32px 64px rgba(0,0,0,.12)'; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = ''; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 1px 1px rgba(0,0,0,.06),0 2px 2px rgba(0,0,0,.06),0 4px 4px rgba(0,0,0,.06),0 8px 8px rgba(0,0,0,.06),0 16px 32px rgba(0,0,0,.08)'; }}
+        className="group/card rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md"
       >
         {/* Cover */}
         {(() => {
@@ -101,15 +95,15 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
           const emoji = primary?.emoji ?? '🍽️';
           return (
             <div
-              className="relative h-32 flex items-center justify-center overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${color}35 0%, ${color}12 100%)` }}
+              className="relative h-28 flex items-center justify-center overflow-hidden"
+              style={{ background: `linear-gradient(135deg, ${color}2E 0%, ${color}12 100%)` }}
             >
               {/* dot grid */}
               <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(${color}28 1.5px, transparent 1.5px)`,
-                backgroundSize: '18px 18px',
+                backgroundImage: `radial-gradient(${color}24 1.25px, transparent 1.25px)`,
+                backgroundSize: '16px 16px',
               }} />
-              <span className="relative text-6xl drop-shadow-sm select-none">{emoji}</span>
+              <span className="relative text-5xl drop-shadow-sm select-none">{emoji}</span>
               {restaurant.listType === 'favorite' && (
                 <div className="absolute top-3 right-3 bg-white/90 rounded-full p-1.5 shadow-sm">
                   <Heart className="w-3.5 h-3.5 text-red-500 fill-current" />
