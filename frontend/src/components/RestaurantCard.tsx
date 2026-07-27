@@ -25,12 +25,6 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   const getCategoryInfo = (category: Category) =>
     CATEGORIES.find((c) => c.value === category);
 
-  const primaryCategory = restaurant.categories.length > 0
-    ? CATEGORIES.find((c) => c.value === restaurant.categories[0])
-    : null;
-
-  const photoColor = primaryCategory?.color ?? '#94a3b8';
-
   const homeDistance = homeCoordinates
     ? formatDistanceMiles(
         distanceMiles(homeCoordinates, {
@@ -63,8 +57,6 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
     const url = `https://www.google.com/maps/search/?api=1&query=${restaurant.latitude},${restaurant.longitude}&query_place_id=${encodeURIComponent(restaurant.name)}`;
     window.open(url, '_blank');
   };
-
-  const boardBackground = `linear-gradient(92deg, ${photoColor}f0 0%, ${photoColor}cf 82%, ${photoColor}bb 100%)`;
 
   if (compact) {
     return (
@@ -103,43 +95,35 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card relative"
+        className="group/card rounded-2xl border border-gray-200/80 bg-white/95 backdrop-blur-sm shadow-[0_1px_2px_rgba(15,23,42,0.06)]"
       >
-        <div className="absolute left-[-30px] top-[24px] h-[2px] w-8 bg-[#8c694d]" />
-
-        <div className="absolute left-[10px] top-[8px] h-4 w-[2px] bg-[#9f754e]" />
-        <div className="absolute left-[28px] top-[8px] h-4 w-[2px] bg-[#9f754e]" />
-        <div className="absolute left-[8px] top-[5px] h-3.5 w-3.5 rounded-full border border-[#8a6647] bg-[#d0ab83] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7)]" />
-        <div className="absolute left-[26px] top-[5px] h-3.5 w-3.5 rounded-full border border-[#8a6647] bg-[#d0ab83] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7)]" />
-
         <button
           onClick={() => setIsExpanded((prev) => !prev)}
-          className="relative w-full text-left rounded-[14px] px-3 py-2 pr-8 border border-[#8b6848]/35 shadow-[0_9px_18px_rgba(0,0,0,0.15)] transition-transform duration-200 hover:-translate-y-[1px]"
-          style={{
-            background: boardBackground,
-            clipPath: 'polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%, 7% 50%)',
-          }}
+          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-gray-50/80"
           aria-expanded={isExpanded}
         >
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0 2px, rgba(0,0,0,0.06) 2px 3px)' }} />
-
-          <div className="relative flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-[13px] font-bold text-[#2f2012] leading-tight truncate">{restaurant.name}</h3>
-              <p className="text-[10px] text-[#3d2d1d]/80 truncate">
-                {homeDistance ? `${homeDistance} from home` : restaurant.city}
-              </p>
+              <h3 className="text-[15px] font-semibold text-gray-900 leading-tight truncate tracking-[-0.01em]">
+                {restaurant.name}
+              </h3>
             </div>
             <ChevronDown
-              className={`w-4 h-4 text-[#3a2a19] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+              className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
             />
           </div>
         </button>
 
         <div
-          className={`overflow-hidden transition-all duration-300 ease-out ${isExpanded ? 'max-h-[680px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}
+          className={`overflow-hidden transition-all duration-300 ease-out ${isExpanded ? 'max-h-[680px] opacity-100' : 'max-h-0 opacity-0'}`}
         >
-          <div className="rounded-[14px] border border-[#e7decb] bg-[#fffdf8] shadow-[0_8px_18px_rgba(15,23,42,0.08)] p-2.5">
+          <div className="border-t border-gray-100 px-4 pb-3.5 pt-2.5">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-gray-400">
+                {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}
+              </span>
+              {homeDistance && <span className="text-[11px] text-gray-500">{homeDistance} from home</span>}
+            </div>
             <p className="text-[10px] text-gray-400 flex items-center gap-0.5 truncate mb-1">
               <MapPin className="w-3 h-3 flex-shrink-0" />
               {restaurant.address}
