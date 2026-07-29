@@ -95,11 +95,15 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
   return (
     <>
       <div
-        className="group/card rounded-2xl glass-surface"
+        className="group/card"
       >
         <button
           onClick={() => setIsExpanded((prev) => !prev)}
-          className="w-full text-left rounded-2xl px-4 py-3.5 transition-colors duration-200 hover:bg-white/10"
+          className={`w-full text-left px-2 py-3 transition-all duration-200 ${
+            isExpanded
+              ? 'rounded-xl border border-white/12 bg-white/7'
+              : 'border-b border-white/10 hover:bg-white/5'
+          }`}
           aria-expanded={isExpanded}
         >
           <div className="flex items-center justify-between gap-3">
@@ -117,7 +121,7 @@ export function RestaurantCard({ restaurant, compact = false }: RestaurantCardPr
         <div
           className={`overflow-hidden transition-all duration-300 ease-out ${isExpanded ? 'max-h-[680px] opacity-100' : 'max-h-0 opacity-0'}`}
         >
-          <div className="border-t glass-divider px-4 pb-3.5 pt-2.5">
+          <div className="mt-1.5 rounded-xl glass-surface px-4 pb-3.5 pt-2.5">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-medium uppercase tracking-[0.08em] text-slate-400">
                 {restaurant.listType === 'favorite' ? 'Favorite' : 'To Visit'}

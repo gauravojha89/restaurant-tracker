@@ -49,7 +49,7 @@ export function RestaurantList({ listType }: RestaurantListProps) {
                 {restaurants.length} {restaurants.length === 1 ? 'place' : 'places'}
               </span>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-1.5">
               {restaurants.map((restaurant) => (
                 <RestaurantCard key={restaurant.id} restaurant={restaurant} />
               ))}
